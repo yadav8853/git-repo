@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DigiSkill Academy — Shape Your Digital Future</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+
+:root {
+  --bg: #0c0d0f;
+  --bg2: #111316;
+  --bg3: #16181c;
+  --card: #1a1c21;
+  --card2: #1f2228;
+  --orange: #ff6b1a;
+  --orange2: #ff8c4a;
+  --orange-dim: rgba(255,107,26,0.12);
+  --orange-glow: rgba(255,107,26,0.25);
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,107,26,0.2);
+  --text: #f0f1f3;
+  --text2: #8a8f9a;
+  --text3: #555a66;
+  --green: #22c55e;
+  --blue: #3b82f6;
+  --purple: #a855f7;
+}
+
+html{scroll-behavior:smooth;}
+
+body{
+  font-family:'Space Grotesk',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* CURSOR */
+.cur{width:10px;height:10px;background:var(--orange);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transition:transform 0.08s;}
+.cur-ring{width:34px;height:34px;border:1.5px solid rgba(255,107,26,0.5);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transition:width 0.2s,height 0.2s,border-color 0.2s;}
+.cur-ring.big{width:54px;height:54px;border-color:var(--orange);}
+
+/* TOPBAR */
+.topbar{
+  background:var(--orange);
+  padding:8px 60px;
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:12px;font-weight:500;letter-spacing:0.5px;color:#fff;
+  position:relative;z-index:200;
+}
+.topbar-links{display:flex;gap:24px;}
+.topbar-links a{color:rgba(255,255,255,0.85);text-decoration:none;font-size:12px;transition:color 0.2s;}
+.topbar-links a:hover{color:#fff;}
+
+/* NAV */
+nav{
+  position:fixed;top:32px;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 60px;
+  background:rgba(12,13,15,0.85);
+  backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+  transition:top 0.3s,padding 0.3s;
+}
+nav.scrolled{top:0;padding:14px 60px;border-bottom-color:rgba(255,107,26,0.15);}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-icon{
+  width:38px;height:38px;background:var(--orange);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:#fff;
+  clip-path:polygon(0 0,85% 0,100% 15%,100% 100%,15% 100%,0 85%);
+}
+.logo-text{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:var(--text);letter-spacing:-0.5px;}
+.logo-text span{color:var(--orange);}
+.nav-links{display:flex;gap:32px;align-items:center;}
+.nav-links a{color:var(--text2);text-decoration:none;font-size:13px;font-weight:500;letter-spacing:0.3px;transition:color 0.2s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:100%;height:1.5px;background:var(--orange);transition:right 0.3s;}
+.nav-links a:hover{color:var(--text);}
+.nav-links a:hover::after{right:0;}
+.nav-enroll{padding:10px 22px;background:var(--orange);color:#fff !important;font-weight:600;font-size:13px;border-radius:4px;letter-spacing:0.3px;transition:background 0.2s,box-shadow 0.2s !important;}
+.nav-enroll::after{display:none !important;}
+.nav-enroll:hover{background:#e55a0a !important;box-shadow:0 4px 20px rgba(255,107,26,0.4) !important;}
+
+/* HERO */
+.hero{
+  min-height:100vh;
+  display:flex;align-items:center;
+  padding:140px 60px 80px;
+  position:relative;overflow:hidden;
+  background:var(--bg);
+}
+/* animated grid bg */
+.hero-grid{
+  position:absolute;inset:0;z-index:0;
+  background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);
+  background-size:60px 60px;
+  -webkit-mask-image:radial-gradient(ellipse 90% 90% at 50% 50%,rgba(0,0,0,0.3) 0%,transparent 80%);
+  mask-image:radial-gradient(ellipse 90% 90% at 50% 50%,rgba(0,0,0,0.3) 0%,transparent 80%);
+  animation:gridPulse 8s ease-in-out infinite;
+}
+@keyframes gridPulse{0%,100%{opacity:0.5;}50%{opacity:1;}}
+.hero-glow{position:absolute;width:700px;height:700px;background:radial-gradient(circle,rgba(255,107,26,0.12) 0%,transparent 70%);top:-200px;right:-200px;z-index:0;animation:glowMove 10s ease-in-out infinite alternate;}
+.hero-glow2{position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(255,107,26,0.06) 0%,transparent 70%);bottom:-100px;left:-100px;z-index:0;}
+@keyframes glowMove{from{transform:translate(0,0);}to{transform:translate(-60px,40px);}}
+
+.hero-content{max-width:680px;position:relative;z-index:2;}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 16px;border:1px solid var(--border2);
+  background:var(--orange-dim);border-radius:100px;
+  font-size:12px;font-weight:500;color:var(--orange2);letter-spacing:0.5px;
+  margin-bottom:28px;
+  opacity:0;animation:fadeUp 0.8s ease 0.1s forwards;
+}
+.hero-badge-dot{width:6px;height:6px;background:var(--orange);border-radius:50%;animation:blink 1.5s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;}}
+.hero-title{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(48px,7vw,90px);
+  font-weight:800;line-height:0.95;
+  letter-spacing:-2px;margin-bottom:24px;
+  opacity:0;animation:fadeUp 0.9s ease 0.25s forwards;
+}
+.hero-title .line2{display:block;color:var(--orange);}
+.hero-title .line3{display:block;color:var(--text3);font-size:0.85em;}
+.hero-desc{
+  font-size:16px;line-height:1.7;color:var(--text2);
+  max-width:520px;font-weight:400;
+  opacity:0;animation:fadeUp 0.9s ease 0.4s forwards;
+  margin-bottom:40px;
+}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:fadeUp 0.9s ease 0.55s forwards;}
+.btn-main{
+  padding:15px 36px;background:var(--orange);color:#fff;
+  font-size:14px;font-weight:600;letter-spacing:0.5px;
+  border:none;border-radius:5px;cursor:none;
+  transition:background 0.2s,box-shadow 0.3s,transform 0.2s;
+  text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+  font-family:'Space Grotesk',sans-serif;
+}
+.btn-main:hover{background:#e55a0a;box-shadow:0 8px 32px rgba(255,107,26,0.4);transform:translateY(-2px);}
+.btn-outline{
+  padding:15px 36px;background:transparent;color:var(--text);
+  font-size:14px;font-weight:500;letter-spacing:0.5px;
+  border:1.5px solid var(--border2);border-radius:5px;cursor:none;
+  transition:border-color 0.2s,background 0.2s;
+  text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+  font-family:'Space Grotesk',sans-serif;
+}
+.btn-outline:hover{border-color:var(--orange);background:var(--orange-dim);}
+
+/* Hero right — code terminal visual */
+.hero-visual{
+  position:absolute;right:60px;top:50%;transform:translateY(-50%);
+  width:44%;max-width:560px;z-index:2;
+  opacity:0;animation:fadeIn 1.2s ease 0.6s forwards;
+}
+.terminal{
+  background:#0d0f12;
+  border:1px solid var(--border);border-radius:10px;
+  overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,0.6),0 0 0 1px rgba(255,107,26,0.05);
+}
+.terminal-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:#16181c;border-bottom:1px solid var(--border);}
+.t-dot{width:12px;height:12px;border-radius:50%;}
+.t-dot.red{background:#ff5f56;}.t-dot.yellow{background:#ffbd2e;}.t-dot.green{background:#27c93f;}
+.terminal-title{font-family:'DM Mono',monospace;font-size:12px;color:var(--text3);margin-left:auto;margin-right:auto;}
+.terminal-body{padding:20px 24px;font-family:'DM Mono',monospace;font-size:13px;line-height:1.9;}
+.t-line{display:block;opacity:0;animation:fadeIn 0.3s ease forwards;}
+.t-comment{color:#4a5066;}
+.t-keyword{color:#c084fc;}
+.t-string{color:#86efac;}
+.t-fn{color:#60a5fa;}
+.t-num{color:var(--orange);}
+.t-var{color:#f0f1f3;}
+.t-op{color:var(--orange2);}
+.t-prompt{color:var(--orange);}
+
+/* floating badges */
+.hero-float{position:absolute;z-index:3;}
+.float-card{
+  background:var(--card);border:1px solid var(--border);border-radius:10px;
+  padding:12px 18px;display:flex;align-items:center;gap:12px;
+  box-shadow:0 8px 32px rgba(0,0,0,0.4);
+  font-size:13px;font-weight:500;white-space:nowrap;
+}
+.float-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.float1{bottom:15%;left:58%;animation:floatA 5s ease-in-out infinite;}
+.float2{top:22%;left:58%;animation:floatB 6s ease-in-out infinite;}
+@keyframes floatA{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+@keyframes floatB{0%,100%{transform:translateY(0);}50%{transform:translateY(10px);}}
+
+/* STATS */
+.stats{
+  background:var(--bg2);
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  display:grid;grid-template-columns:repeat(4,1fr);
+  position:relative;z-index:2;
+}
+.stat-item{
+  padding:36px 48px;border-right:1px solid var(--border);position:relative;
+  transition:background 0.3s;
+}
+.stat-item:hover{background:var(--orange-dim);}
+.stat-item:last-child{border-right:none;}
+.stat-num{
+  font-family:'Syne',sans-serif;font-size:48px;font-weight:800;
+  color:var(--text);line-height:1;letter-spacing:-1px;
+}
+.stat-num span{color:var(--orange);}
+.stat-lbl{font-size:12px;color:var(--text2);letter-spacing:1px;text-transform:uppercase;margin-top:6px;font-weight:500;}
+.stat-item::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--orange);transform:scaleX(0);transform-origin:left;transition:transform 0.5s ease;}
+.stat-item.lit::before{transform:scaleX(1);}
+
+/* SECTION BASE */
+.sec{position:relative;z-index:2;}
+.sec-label{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.sec-label-line{width:28px;height:2px;background:var(--orange);}
+.sec-label span{font-size:11px;letter-spacing:3px;color:var(--orange);text-transform:uppercase;font-weight:600;font-family:'DM Mono',monospace;}
+.sec-title{font-family:'Syne',sans-serif;font-size:clamp(32px,4.5vw,56px);font-weight:800;line-height:1.05;letter-spacing:-1px;}
+.sec-title em{font-style:normal;color:var(--orange);}
+
+/* COURSES */
+.courses{padding:100px 60px;background:var(--bg);}
+.courses-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;}
+.courses-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.course-card{
+  background:var(--card);border:1px solid var(--border);border-radius:10px;
+  padding:0;overflow:hidden;position:relative;
+  transition:border-color 0.3s,transform 0.3s,box-shadow 0.3s;cursor:none;
+}
+.course-card:hover{border-color:var(--border2);transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,0.4);}
+.course-top{
+  padding:28px 28px 20px;
+  position:relative;
+}
+.course-icon-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.course-emoji{width:52px;height:52px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:24px;}
+.course-level{font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:100px;font-weight:600;font-family:'DM Mono',monospace;}
+.course-name{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;margin-bottom:10px;line-height:1.2;}
+.course-desc{font-size:13px;color:var(--text2);line-height:1.7;font-weight:400;}
+.course-footer{
+  padding:16px 28px;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--card2);
+}
+.course-meta{display:flex;gap:16px;}
+.course-meta-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);}
+.course-meta-item svg{width:14px;height:14px;stroke:var(--orange);fill:none;}
+.course-link{font-size:12px;font-weight:600;color:var(--orange);text-decoration:none;letter-spacing:0.5px;transition:gap 0.2s;display:flex;align-items:center;gap:6px;}
+.course-link:hover{gap:10px;}
+.course-bar{height:3px;background:linear-gradient(90deg,var(--orange),var(--orange2));transform:scaleX(0);transform-origin:left;transition:transform 0.4s;position:absolute;top:0;left:0;right:0;}
+.course-card:hover .course-bar{transform:scaleX(1);}
+
+/* ABOUT */
+.about{padding:100px 60px;background:var(--bg2);}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-top:64px;}
+.about-left{position:relative;}
+.about-img{
+  width:100%;aspect-ratio:4/5;background:var(--card);border-radius:12px;
+  overflow:hidden;border:1px solid var(--border);position:relative;
+}
+.about-img-inner{
+  width:100%;height:100%;
+  background:linear-gradient(135deg,#1a1c21 0%,#111316 100%);
+  display:flex;align-items:center;justify-content:center;
+}
+.about-img-inner svg{width:70%;height:70%;opacity:0.7;}
+.about-badge-card{
+  position:absolute;bottom:-16px;right:-16px;
+  background:var(--orange);color:#fff;border-radius:10px;
+  padding:16px 20px;box-shadow:0 8px 32px rgba(255,107,26,0.4);
+}
+.about-badge-num{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;line-height:1;}
+.about-badge-txt{font-size:11px;font-weight:500;opacity:0.9;letter-spacing:0.5px;}
+.about-tag{
+  position:absolute;top:-16px;left:-16px;
+  background:var(--card2);border:1px solid var(--border2);border-radius:8px;
+  padding:10px 16px;font-size:13px;font-weight:500;color:var(--orange2);
+}
+
+.about-right{display:flex;flex-direction:column;gap:0;}
+.about-desc{font-size:15px;line-height:1.8;color:var(--text2);font-weight:400;margin-bottom:32px;}
+.faculty-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px;}
+.faculty-card{
+  background:var(--card);border:1px solid var(--border);border-radius:8px;
+  padding:16px;display:flex;align-items:center;gap:12px;
+  transition:border-color 0.2s,background 0.2s;
+}
+.faculty-card:hover{border-color:var(--border2);background:var(--card2);}
+.faculty-avatar{
+  width:44px;height:44px;border-radius:50%;background:var(--orange-dim);
+  border:2px solid var(--border2);display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--orange);flex-shrink:0;
+}
+.faculty-name{font-size:13px;font-weight:600;line-height:1.3;}
+.faculty-role{font-size:11px;color:var(--text2);margin-top:2px;}
+
+/* PLACEMENTS */
+.placements{padding:100px 60px;background:var(--bg);}
+.placements-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;}
+
+.place-logos{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:1px;
+  background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;
+  margin-bottom:48px;
+}
+.place-logo{
+  background:var(--card);padding:24px;
+  display:flex;align-items:center;justify-content:center;
+  transition:background 0.2s;
+}
+.place-logo:hover{background:var(--orange-dim);}
+.place-logo-text{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text3);letter-spacing:-0.5px;transition:color 0.2s;}
+.place-logo:hover .place-logo-text{color:var(--text2);}
+
+.stories-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.story-card{
+  background:var(--card);border:1px solid var(--border);border-radius:10px;
+  padding:28px;position:relative;overflow:hidden;
+  transition:border-color 0.3s,transform 0.3s;cursor:none;
+}
+.story-card:hover{border-color:var(--border2);transform:translateY(-4px);}
+.story-card::before{content:'"';position:absolute;top:-10px;right:20px;font-size:120px;color:rgba(255,107,26,0.04);font-family:'Syne',sans-serif;font-weight:800;line-height:1;}
+.story-stars{display:flex;gap:3px;margin-bottom:16px;}
+.story-stars span{color:var(--orange);font-size:14px;}
+.story-text{font-size:14px;line-height:1.7;color:var(--text2);margin-bottom:20px;font-style:italic;}
+.story-footer{display:flex;align-items:center;gap:12px;padding-top:16px;border-top:1px solid var(--border);}
+.story-avatar{width:40px;height:40px;border-radius:50%;background:var(--orange-dim);border:2px solid var(--border2);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;color:var(--orange);}
+.story-name{font-size:13px;font-weight:600;}
+.story-role{font-size:11px;color:var(--text2);margin-top:2px;}
+.story-pkg{
+  margin-left:auto;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);
+  color:var(--green);font-size:12px;font-weight:600;padding:4px 10px;border-radius:100px;
+}
+
+/* ADMISSIONS */
+.admissions{padding:100px 60px;background:var(--bg2);}
+.admissions-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;margin-top:64px;}
+
+.steps{display:flex;flex-direction:column;gap:0;position:relative;}
+.steps::before{content:'';position:absolute;left:21px;top:0;bottom:0;width:1px;background:linear-gradient(180deg,var(--orange),transparent);}
+.step{display:flex;gap:20px;padding-bottom:36px;position:relative;}
+.step:last-child{padding-bottom:0;}
+.step-num{
+  width:44px;height:44px;border-radius:50%;background:var(--card2);border:2px solid var(--orange);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--orange);
+  flex-shrink:0;z-index:1;transition:background 0.2s;
+}
+.step:hover .step-num{background:var(--orange-dim);}
+.step-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:6px;}
+.step-desc{font-size:13px;color:var(--text2);line-height:1.7;font-weight:400;}
+
+.enroll-form{
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:36px;position:relative;overflow:hidden;
+}
+.enroll-form::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--orange),var(--orange2));}
+.form-title{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;margin-bottom:6px;}
+.form-sub{font-size:13px;color:var(--text2);margin-bottom:28px;}
+.fg{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+.fg label{font-size:11px;letter-spacing:1.5px;color:var(--text2);text-transform:uppercase;font-weight:600;font-family:'DM Mono',monospace;}
+.fg input,.fg select,.fg textarea{
+  background:var(--bg2);border:1px solid var(--border);color:var(--text);
+  padding:12px 16px;font-family:'Space Grotesk',sans-serif;font-size:14px;
+  border-radius:6px;outline:none;transition:border-color 0.2s,box-shadow 0.2s;appearance:none;
+}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,107,26,0.1);}
+.fg select option{background:var(--bg2);}
+.fg textarea{min-height:90px;resize:none;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.btn-form{
+  width:100%;padding:16px;background:var(--orange);color:#fff;
+  border:none;border-radius:6px;font-family:'Syne',sans-serif;
+  font-size:15px;font-weight:700;letter-spacing:0.5px;cursor:none;
+  transition:background 0.2s,box-shadow 0.2s;margin-top:4px;
+}
+.btn-form:hover{background:#e55a0a;box-shadow:0 6px 24px rgba(255,107,26,0.35);}
+
+/* CTA STRIP */
+.cta-strip{
+  padding:80px 60px;
+  background:linear-gradient(135deg,#1a0e06 0%,#120e06 50%,#0c0d0f 100%);
+  border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:space-between;gap:40px;
+  position:relative;overflow:hidden;
+}
+.cta-strip::before{content:'';position:absolute;right:-200px;top:-200px;width:500px;height:500px;background:radial-gradient(circle,rgba(255,107,26,0.08) 0%,transparent 70%);}
+.cta-text h2{font-family:'Syne',sans-serif;font-size:clamp(28px,4vw,48px);font-weight:800;letter-spacing:-1px;margin-bottom:10px;}
+.cta-text h2 span{color:var(--orange);}
+.cta-text p{font-size:15px;color:var(--text2);}
+.cta-actions{display:flex;gap:14px;flex-shrink:0;}
+
+/* FOOTER */
+footer{padding:64px 60px 32px;background:#080a0c;border-top:1px solid var(--border);}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;}
+.footer-brand p{font-size:13px;color:var(--text3);line-height:1.8;margin-top:14px;max-width:270px;}
+.footer-social{display:flex;gap:10px;margin-top:20px;}
+.soc-btn{width:36px;height:36px;border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:14px;text-decoration:none;transition:border-color 0.2s,color 0.2s,background 0.2s;}
+.soc-btn:hover{border-color:var(--orange);color:var(--orange);background:var(--orange-dim);}
+.footer-col h4{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text);margin-bottom:18px;}
+.footer-links{display:flex;flex-direction:column;gap:11px;}
+.footer-links a{font-size:13px;color:var(--text3);text-decoration:none;transition:color 0.2s;}
+.footer-links a:hover{color:var(--orange2);}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:28px;border-top:1px solid var(--border);}
+.footer-copy{font-size:12px;color:var(--text3);}
+.footer-powered{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.65s ease,transform 0.65s ease;}
+.reveal.on{opacity:1;transform:translateY(0);}
+.d1{transition-delay:0.1s;}.d2{transition-delay:0.2s;}.d3{transition-delay:0.3s;}.d4{transition-delay:0.4s;}
+
+/* Mobile */
+@media(max-width:960px){
+  .topbar,.hero-visual,.hero-float{display:none;}
+  nav{top:0;padding:14px 20px;}
+  .hero{padding:90px 20px 60px;}
+  .stats{grid-template-columns:repeat(2,1fr);}
+  .courses,.about,.placements,.admissions,.cta-strip,footer{padding:64px 20px;}
+  .courses-grid,.stories-grid,.faculty-grid{grid-template-columns:1fr;}
+  .about-grid,.admissions-grid{grid-template-columns:1fr;gap:40px;}
+  .about-left{display:none;}
+  .courses-head,.placements-head{flex-direction:column;align-items:flex-start;gap:20px;}
+  .place-logos{grid-template-columns:repeat(3,1fr);}
+  .cta-strip{flex-direction:column;text-align:center;}
+  .cta-actions{justify-content:center;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .nav-links{display:none;}
+  .form-row{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="curRing"></div>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <span>🎓 New batch starting June 2025 — Limited seats available!</span>
+  <div class="topbar-links">
+    <a href="tel:+911234567890">📞 +91 12345 67890</a>
+    <a href="mailto:info@digiskill.in">✉ info@digiskill.in</a>
+    <a href="#">Mumbai | Delhi | Bangalore</a>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a class="logo" href="#">
+    <div class="logo-icon">DS</div>
+    <div class="logo-text">Digi<span>Skill</span> Academy</div>
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="index.html">Home</a>
+    <a class="nav-link" href="about.html">About</a>
+    <a class="nav-link" href="academics.html">Academics</a>
+    <a class="nav-link active" href="schoole.html">School</a>
+    <a class="nav-link" href="digital-academi.html">digital</a>
+    <a href="#admissions" class="nav-enroll">Enroll Now →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      India's #1 IT Skill Academy — Est. 2012
+    </div>
+    <h1 class="hero-title">
+      Shape Your
+      <em class="line2">Digital</em>
+      <em class="line3">Future.</em>
+    </h1>
+    <p class="hero-desc">Industry-led IT programs designed to launch careers. From Web Development to AI & Data Science — master the skills that matter most in 2025.</p>
+    <div class="hero-actions">
+      <a href="#courses" class="btn-main">Explore Courses →</a>
+      <a href="#admissions" class="btn-outline">Apply Now</a>
+    </div>
+  </div>
+
+  <!-- Code terminal visual -->
+  <div class="hero-visual">
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="t-dot red"></div>
+        <div class="t-dot yellow"></div>
+        <div class="t-dot green"></div>
+        <div class="terminal-title">digiskill_student.py</div>
+      </div>
+      <div class="terminal-body">
+        <span class="t-line" style="animation-delay:0.8s"><span class="t-comment"># DigiSkill Academy — Your Journey Starts Here</span></span>
+        <span class="t-line" style="animation-delay:1.0s">&nbsp;</span>
+        <span class="t-line" style="animation-delay:1.2s"><span class="t-keyword">class</span> <span class="t-fn">Student</span>:</span>
+        <span class="t-line" style="animation-delay:1.4s">&nbsp;&nbsp;<span class="t-keyword">def</span> <span class="t-fn">__init__</span>(<span class="t-var">self</span>, <span class="t-var">name</span>):</span>
+        <span class="t-line" style="animation-delay:1.6s">&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-var">self</span>.<span class="t-var">name</span> = <span class="t-var">name</span></span>
+        <span class="t-line" style="animation-delay:1.8s">&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-var">self</span>.<span class="t-var">skills</span> = []</span>
+        <span class="t-line" style="animation-delay:2.0s">&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-var">self</span>.<span class="t-var">salary</span> = <span class="t-num">0</span></span>
+        <span class="t-line" style="animation-delay:2.2s">&nbsp;</span>
+        <span class="t-line" style="animation-delay:2.4s">&nbsp;&nbsp;<span class="t-keyword">def</span> <span class="t-fn">enroll</span>(<span class="t-var">self</span>, <span class="t-var">course</span>):</span>
+        <span class="t-line" style="animation-delay:2.6s">&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-var">self</span>.<span class="t-var">skills</span>.<span class="t-fn">append</span>(<span class="t-var">course</span>)</span>
+        <span class="t-line" style="animation-delay:2.8s">&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-keyword">return</span> <span class="t-string">"Career unlocked! 🚀"</span></span>
+        <span class="t-line" style="animation-delay:3.0s">&nbsp;</span>
+        <span class="t-line" style="animation-delay:3.2s"><span class="t-var">me</span> = <span class="t-fn">Student</span>(<span class="t-string">"You"</span>)</span>
+        <span class="t-line" style="animation-delay:3.4s"><span class="t-fn">print</span>(<span class="t-var">me</span>.<span class="t-fn">enroll</span>(<span class="t-string">"Full Stack Dev"</span>))</span>
+        <span class="t-line" style="animation-delay:3.8s">&nbsp;</span>
+        <span class="t-line" style="animation-delay:4.0s"><span class="t-prompt">▶</span> <span class="t-string">"Career unlocked! 🚀"</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating cards -->
+  <div class="hero-float float1">
+    <div class="float-card">
+      <div class="float-icon" style="background:rgba(34,197,94,0.1);">✅</div>
+      <div>
+        <div style="font-size:12px;font-weight:600;">98% Placement Rate</div>
+        <div style="font-size:11px;color:var(--text2);">2024 Batch</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-float float2">
+    <div class="float-card">
+      <div class="float-icon" style="background:rgba(255,107,26,0.1);">🏆</div>
+      <div>
+        <div style="font-size:12px;font-weight:600;">Avg. ₹8.5 LPA</div>
+        <div style="font-size:11px;color:var(--text2);">Starting Package</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-item" data-val="12000"><div class="stat-num"><span class="snum">12000</span><span>+</span></div><div class="stat-lbl">Students Trained</div></div>
+  <div class="stat-item" data-val="98"><div class="stat-num"><span class="snum">98</span><span>%</span></div><div class="stat-lbl">Placement Rate</div></div>
+  <div class="stat-item" data-val="200"><div class="stat-num"><span class="snum">200</span><span>+</span></div><div class="stat-lbl">Hiring Partners</div></div>
+  <div class="stat-item" data-val="8"><div class="stat-num"><span class="snum">8</span><span>.5 LPA</span></div><div class="stat-lbl">Avg. Package</div></div>
+</div>
+
+<!-- COURSES -->
+<section class="courses sec" id="courses">
+  <div class="courses-head">
+    <div>
+      <div class="sec-label reveal"><div class="sec-label-line"></div><span>What We Teach</span></div>
+      <h2 class="sec-title reveal d1">Our <em>Programs</em></h2>
+    </div>
+    <a href="#admissions" class="btn-outline reveal">View All Courses</a>
+  </div>
+  <div class="courses-grid">
+
+    <div class="course-card reveal">
+      <div class="course-bar"></div>
+      <div class="course-top">
+        <div class="course-icon-row">
+          <div class="course-emoji" style="background:rgba(59,130,246,0.12);">💻</div>
+          <span class="course-level" style="background:rgba(59,130,246,0.1);color:#60a5fa;">Beginner → Pro</span>
+        </div>
+        <div class="course-name">Full Stack Web Development</div>
+        <p class="course-desc">Master HTML, CSS, JavaScript, React, Node.js, and MongoDB. Build real-world projects and land your first dev job.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;">
+          <span style="font-size:11px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:3px 8px;color:var(--text2);">React</span>
+          <span style="font-size:11px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:3px 8px;color:var(--text2);">Node.js</span>
+          <span style="font-size:11px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:3px 8px;color:var(--text2);">MongoDB</span>
+          <span style="font-size:11px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:3px 8px;color:var(--text2);">AWS</span>
+        </div>
+      </div>
+      <div class="course-footer">
+        <div class="course-meta">
+          <div class="course-meta-item"><svg viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>6 Months</div>
+          <div class="course-meta-item"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>Batch: 40</div>
+        </div>
+        <a href="#admissions" class="course-link">Enroll →</a>
+      </div>
+    </div>
+
+    <div class="course-card reveal d1">
+      <div class="course-bar"></div>
+      <div class="course-top">
+        <div class="course-icon-row">
+          <div class="course-emoji" style="background:rgba(168,85,247,0.12);">🤖</div>
+          <span class="course-level" style="background:rgba(168,85,247,0.1);color:#c084fc;">Intermediate</span>
+        </div>
+        <div class="course-name">AI & Machine Learning</div>
+        <p class="course-desc">Python, TensorFlow, scikit-learn, NLP, Computer Vision, and deployment. Become an AI engineer companies compete for.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;">
+          <span style="font-size:11px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:3px 8px;color:var(--text2);">Python</span>
+          <span style="font-size:11px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:3px 8px;color:var(--text2);">TensorFlow</span>
+          <span style="font-size:11px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:3px 8px;color:var(--text2);">NLP</span>
+          <span style="font-size:11px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:3px 8px;color:var(--text2);">OpenCV</span>
+        </div>
+      </div>
+      <div class="course-footer">
+        <div class="course-meta">
+          <div class="course-meta-item"><svg viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>8 Months</div>
+          <div class="course-meta-item"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>Batch: 30</div>
+        </div>
+        <a href="#admissions" class="course-link">Enroll →</a>
+      </div>
+    </div>
+
+    <div class="course-card reveal d2">
+      <div class="course-bar"></div>
+      <div class="course-top">
+        <div class="course-icon-row">
+          <div class="course-emoji" style="background:rgba(255,107,26,0.12);">☁️</div>
+          <span class="course-level" style="background:rgba(255,107,26,0.1);color:var(--orange);">All Levels</span>
+        </div>
+        <div class="course-name">Cloud Computing & DevOps</div>
+        <p class="course-desc">AWS, Azure, Docker, Kubernetes, CI/CD pipelines. Become a cloud engineer and manage scalable infrastructure like a pro.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;">
+          <span style="font-size:11px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:3px 8px;color:var(--text2);">AWS</span>
+          <span style="font-size:11px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:3px 8px;color:var(--text2);">Docker</span>
+          <span style="font-size:11px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:3px 8px;color:var(--text2);">Kubernetes</span>
+          <span style="font-size:11px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:3px 8px;color:var(--text2);">CI/CD</span>
+        </div>
+      </div>
+      <div class="course-footer">
+        <div class="course-meta">
+          <div class="course-meta-item"><svg viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>5 Months</div>
+          <div class="course-meta-item"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>Batch: 35</div>
+        </div>
+        <a href="#admissions" class="course-link">Enroll →</a>
+      </div>
+    </div>
+
+    <div class="course-card reveal d1">
+      <div class="course-bar"></div>
+      <div class="course-top">
+        <div class="course-icon-row">
+          <div class="course-emoji" style="background:rgba(34,197,94,0.12);">📊</div>
+          <span class="course-level" style="background:rgba(34,197,94,0.1);color:var(--green);">Beginner</span>
+        </div>
+        <div class="course-name">Data Science & Analytics</div>
+        <p class="course-desc">SQL, Python, Power BI, Tableau, and statistical modeling. Turn raw data into actionable business insights and drive decisions.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;">
+          <span style="font-size:11px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:3px 8px;color:var(--text2);">Python</span>
+          <span style="font-size:11px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:3px 8px;color:var(--text2);">SQL</span>
+          <span style="font-size:11px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:3px 8px;color:var(--text2);">Power BI</span>
+          <span style="font-size:11px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:3px 8px;color:var(--text2);">Tableau</span>
+        </div>
+      </div>
+      <div class="course-footer">
+        <div class="course-meta">
+          <div class="course-meta-item"><svg viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>6 Months</div>
+          <div class="course-meta-item"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>Batch: 40</div>
+        </div>
+        <a href="#admissions" class="course-link">Enroll →</a>
+      </div>
+    </div>
+
+    <div class="course-card reveal d2">
+      <div class="course-bar"></div>
+      <div class="course-top">
+        <div class="course-icon-row">
+          <div class="course-emoji" style="background:rgba(251,191,36,0.12);">🔐</div>
+          <span class="course-level" style="background:rgba(251,191,36,0.1);color:#fbbf24;">Advanced</span>
+        </div>
+        <div class="course-name">Cybersecurity & Ethical Hacking</div>
+        <p class="course-desc">Network security, penetration testing, VAPT, SOC operations, and CEH certification prep. Protect the digital world.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;">
+          <span style="font-size:11px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:3px 8px;color:var(--text2);">Kali Linux</span>
+          <span style="font-size:11px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:3px 8px;color:var(--text2);">VAPT</span>
+          <span style="font-size:11px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:3px 8px;color:var(--text2);">CEH</span>
+          <span style="font-size:11px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:3px 8px;color:var(--text2);">SOC</span>
+        </div>
+      </div>
+      <div class="course-footer">
+        <div class="course-meta">
+          <div class="course-meta-item"><svg viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>7 Months</div>
+          <div class="course-meta-item"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>Batch: 25</div>
+        </div>
+        <a href="#admissions" class="course-link">Enroll →</a>
+      </div>
+    </div>
+
+    <div class="course-card reveal d3">
+      <div class="course-bar"></div>
+      <div class="course-top">
+        <div class="course-icon-row">
+          <div class="course-emoji" style="background:rgba(244,63,94,0.12);">📱</div>
+          <span class="course-level" style="background:rgba(244,63,94,0.1);color:#fb7185;">Intermediate</span>
+        </div>
+        <div class="course-name">Mobile App Development</div>
+        <p class="course-desc">Flutter, React Native, Android and iOS development. Build cross-platform apps that reach millions of users worldwide.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;">
+          <span style="font-size:11px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:3px 8px;color:var(--text2);">Flutter</span>
+          <span style="font-size:11px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:3px 8px;color:var(--text2);">React Native</span>
+          <span style="font-size:11px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:3px 8px;color:var(--text2);">Dart</span>
+          <span style="font-size:11px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:3px 8px;color:var(--text2);">Firebase</span>
+        </div>
+      </div>
+      <div class="course-footer">
+        <div class="course-meta">
+          <div class="course-meta-item"><svg viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>5 Months</div>
+          <div class="course-meta-item"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>Batch: 35</div>
+        </div>
+        <a href="#admissions" class="course-link">Enroll →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about sec" id="about">
+  <div class="sec-label reveal"><div class="sec-label-line"></div><span>About Us</span></div>
+  <h2 class="sec-title reveal d1">Meet the <em>Team</em></h2>
+  <div class="about-grid">
+    <div class="about-left reveal">
+      <div class="about-img">
+        <div class="about-img-inner">
+          <svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
+            <defs><pattern id="abgrid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(255,107,26,0.1)" stroke-width="1"/></pattern></defs>
+            <rect width="300" height="400" fill="url(#abgrid)"/>
+            <circle cx="150" cy="160" r="80" fill="rgba(255,107,26,0.06)" stroke="rgba(255,107,26,0.2)" stroke-width="1"/>
+            <circle cx="150" cy="160" r="50" fill="rgba(255,107,26,0.08)" stroke="rgba(255,107,26,0.3)" stroke-width="1"/>
+            <circle cx="150" cy="160" r="20" fill="rgba(255,107,26,0.15)"/>
+            <text x="150" y="167" text-anchor="middle" font-family="Syne,sans-serif" font-size="16" font-weight="800" fill="var(--orange)">DS</text>
+            <line x1="150" y1="240" x2="150" y2="320" stroke="rgba(255,107,26,0.2)" stroke-width="1"/>
+            <line x1="80" y1="310" x2="220" y2="310" stroke="rgba(255,107,26,0.15)" stroke-width="1"/>
+            <circle cx="80" cy="310" r="12" fill="rgba(59,130,246,0.2)" stroke="rgba(59,130,246,0.3)" stroke-width="1"/>
+            <circle cx="150" cy="310" r="12" fill="rgba(255,107,26,0.2)" stroke="rgba(255,107,26,0.3)" stroke-width="1"/>
+            <circle cx="220" cy="310" r="12" fill="rgba(168,85,247,0.2)" stroke="rgba(168,85,247,0.3)" stroke-width="1"/>
+            <text x="80" y="349" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.3)" font-family="monospace">Dev</text>
+            <text x="150" y="349" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.3)" font-family="monospace">Design</text>
+            <text x="220" y="349" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.3)" font-family="monospace">Data</text>
+          </svg>
+        </div>
+      </div>
+      <div class="about-badge-card">
+        <div class="about-badge-num">13+</div>
+        <div class="about-badge-txt">Years Shaping<br>IT Careers</div>
+      </div>
+      <div class="about-tag">🏆 Best IT Institute 2024</div>
+    </div>
+
+    <div class="about-right">
+      <div class="sec-label reveal"><div class="sec-label-line"></div><span>Our Story</span></div>
+      <p class="about-desc reveal d1">Founded in 2012 with a mission to bridge the gap between academia and the tech industry, DigiSkill Academy has grown into one of India's most trusted IT training institutes. Our curriculum is co-designed with industry leaders at Google, Infosys, TCS, and Wipro to ensure graduates are job-ready from day one.</p>
+      <p class="about-desc reveal d2" style="margin-top:-16px;">We believe in hands-on learning — every course includes real projects, live mentorship, and career support until you land your first role.</p>
+
+      <div class="sec-label reveal d2" style="margin-top:8px;"><div class="sec-label-line"></div><span>Our Faculty</span></div>
+      <div class="faculty-grid reveal d3">
+        <div class="faculty-card">
+          <div class="faculty-avatar">AK</div>
+          <div><div class="faculty-name">Ankit Kumar</div><div class="faculty-role">Full Stack Lead · Ex-Google</div></div>
+        </div>
+        <div class="faculty-card">
+          <div class="faculty-avatar">PS</div>
+          <div><div class="faculty-name">Priya Sharma</div><div class="faculty-role">AI/ML Expert · Ex-Microsoft</div></div>
+        </div>
+        <div class="faculty-card">
+          <div class="faculty-avatar">RV</div>
+          <div><div class="faculty-name">Rahul Verma</div><div class="faculty-role">Cloud Architect · AWS Cert.</div></div>
+        </div>
+        <div class="faculty-card">
+          <div class="faculty-avatar">SM</div>
+          <div><div class="faculty-name">Sneha Mehta</div><div class="faculty-role">Data Science · Ex-Flipkart</div></div>
+        </div>
+        <div class="faculty-card">
+          <div class="faculty-avatar">NK</div>
+          <div><div class="faculty-name">Neel Kapoor</div><div class="faculty-role">Cybersecurity · CEH, CISSP</div></div>
+        </div>
+        <div class="faculty-card">
+          <div class="faculty-avatar">DP</div>
+          <div><div class="faculty-name">Divya Patel</div><div class="faculty-role">Mobile Dev · Flutter Expert</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLACEMENTS -->
+<section class="placements sec" id="placements">
+  <div class="placements-head">
+    <div>
+      <div class="sec-label reveal"><div class="sec-label-line"></div><span>Our Alumni</span></div>
+      <h2 class="sec-title reveal d1">Placement <em>Success</em></h2>
+    </div>
+    <div style="text-align:right;" class="reveal d1">
+      <div style="font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:var(--orange);">₹22 LPA</div>
+      <div style="font-size:12px;color:var(--text2);">Highest Package 2024</div>
+    </div>
+  </div>
+
+  <div class="place-logos reveal">
+    <div class="place-logo"><div class="place-logo-text">Google</div></div>
+    <div class="place-logo"><div class="place-logo-text">Microsoft</div></div>
+    <div class="place-logo"><div class="place-logo-text">Infosys</div></div>
+    <div class="place-logo"><div class="place-logo-text">Wipro</div></div>
+    <div class="place-logo"><div class="place-logo-text">TCS</div></div>
+    <div class="place-logo"><div class="place-logo-text">Accenture</div></div>
+    <div class="place-logo"><div class="place-logo-text">Flipkart</div></div>
+    <div class="place-logo"><div class="place-logo-text">Zomato</div></div>
+    <div class="place-logo"><div class="place-logo-text">Razorpay</div></div>
+    <div class="place-logo"><div class="place-logo-text">Swiggy</div></div>
+  </div>
+
+  <div class="stories-grid">
+    <div class="story-card reveal">
+      <div class="story-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <p class="story-text">"I joined DigiSkill with zero coding experience. Within 6 months I was placed at Infosys. The mentorship and live projects made all the difference."</p>
+      <div class="story-footer">
+        <div class="story-avatar">RK</div>
+        <div><div class="story-name">Ravi Kumar</div><div class="story-role">Full Stack Dev · Infosys</div></div>
+        <div class="story-pkg">₹7.2 LPA</div>
+      </div>
+    </div>
+    <div class="story-card reveal d1">
+      <div class="story-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <p class="story-text">"The AI/ML course was incredibly industry-aligned. I cracked my Google interview on the first attempt. DigiSkill's mock interviews were game-changers."</p>
+      <div class="story-footer">
+        <div class="story-avatar">NS</div>
+        <div><div class="story-name">Neha Singh</div><div class="story-role">ML Engineer · Google</div></div>
+        <div class="story-pkg">₹18 LPA</div>
+      </div>
+    </div>
+    <div class="story-card reveal d2">
+      <div class="story-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <p class="story-text">"Best investment I ever made. The Cloud & DevOps course gave me AWS certification and a job at Microsoft — all in under a year. Truly life-changing."</p>
+      <div class="story-footer">
+        <div class="story-avatar">AP</div>
+        <div><div class="story-name">Arjun Patil</div><div class="story-role">Cloud Engineer · Microsoft</div></div>
+        <div class="story-pkg">₹14 LPA</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ADMISSIONS -->
+<section class="admissions sec" id="admissions">
+  <div class="sec-label reveal"><div class="sec-label-line"></div><span>Get Started</span></div>
+  <h2 class="sec-title reveal d1">Admissions <em>Open</em></h2>
+  <div class="admissions-grid">
+    <div>
+      <p style="font-size:15px;color:var(--text2);line-height:1.7;margin:20px 0 40px;" class="reveal d1">Joining DigiSkill Academy is simple. Follow these four steps and begin your tech career transformation today.</p>
+      <div class="steps reveal d2">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div><div class="step-title">Submit Application</div><p class="step-desc">Fill out the enrollment form with your basic details and course preference. Takes less than 2 minutes.</p></div>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div><div class="step-title">Counselling Call</div><p class="step-desc">Our career counsellors will call you within 24 hours to discuss your goals and suggest the best program.</p></div>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div><div class="step-title">Seat Confirmation</div><p class="step-desc">Complete document verification and fee payment to confirm your seat in the upcoming batch.</p></div>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <div><div class="step-title">Start Learning</div><p class="step-desc">Attend orientation, get your learning kit, and dive into your program with our expert instructors.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="enroll-form reveal d2">
+      <div class="form-title">Apply Now</div>
+      <div class="form-sub">Get a free counselling session worth ₹999 — absolutely free.</div>
+      <div class="form-row">
+        <div class="fg"><label>Full Name</label><input type="text" placeholder="Your full name"></div>
+        <div class="fg"><label>Phone</label><input type="tel" placeholder="+91 XXXXX XXXXX"></div>
+      </div>
+      <div class="fg"><label>Email</label><input type="email" placeholder="your@email.com"></div>
+      <div class="fg">
+        <label>Course Interested In</label>
+        <select>
+          <option>Select a course</option>
+          <option>Full Stack Web Development</option>
+          <option>AI & Machine Learning</option>
+          <option>Cloud Computing & DevOps</option>
+          <option>Data Science & Analytics</option>
+          <option>Cybersecurity & Ethical Hacking</option>
+          <option>Mobile App Development</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>Educational Background</label>
+        <select>
+          <option>Select qualification</option>
+          <option>10th / High School</option>
+          <option>12th / Intermediate</option>
+          <option>Pursuing Graduation</option>
+          <option>Graduate (B.E / B.Tech / BCA)</option>
+          <option>Post Graduate</option>
+          <option>Working Professional</option>
+        </select>
+      </div>
+      <div class="fg"><label>Message (Optional)</label><textarea placeholder="Any specific goals or questions?"></textarea></div>
+      <button class="btn-form" id="enrollBtn">Apply for Free Counselling →</button>
+    </div>
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<div class="cta-strip reveal">
+  <div class="cta-text">
+    <h2>Ready to build your <span>tech career?</span></h2>
+    <p>New batch starts June 2025. Only a few seats remain — don't miss out.</p>
+  </div>
+  <div class="cta-actions">
+    <a href="#admissions" class="btn-main">Enroll Now →</a>
+    <a href="tel:+911234567890" class="btn-outline">📞 Call Us</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo" style="text-decoration:none;display:inline-flex;">
+        <div class="logo-icon">DS</div>
+        <div class="logo-text" style="margin-left:10px;">Digi<span>Skill</span> Academy</div>
+      </div>
+      <p>Empowering India's next generation of tech professionals since 2012. Industry-led. Career-focused. Result-driven.</p>
+      <div class="footer-social">
+        <a class="soc-btn" href="#">in</a>
+        <a class="soc-btn" href="#">tw</a>
+        <a class="soc-btn" href="#">yt</a>
+        <a class="soc-btn" href="#">ig</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Courses</h4>
+      <div class="footer-links">
+        <a href="#">Full Stack Dev</a><a href="#">AI & ML</a>
+        <a href="#">Cloud & DevOps</a><a href="#">Data Science</a>
+        <a href="#">Cybersecurity</a><a href="#">Mobile Dev</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <div class="footer-links">
+        <a href="#">About Us</a><a href="#">Our Faculty</a>
+        <a href="#">Placements</a><a href="#">Student Reviews</a>
+        <a href="#">Blog</a><a href="#">Careers</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <div class="footer-links">
+        <a href="#">Mumbai Campus</a><a href="#">Delhi Campus</a>
+        <a href="#">Bangalore Campus</a>
+        <a href="mailto:info@digiskill.in">info@digiskill.in</a>
+        <a href="tel:+911234567890">+91 12345 67890</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 DigiSkill Academy. All rights reserved.</div>
+    <div class="footer-powered">Built with ❤️ for future technologists</div>
+  </div>
+</footer>
+
+<script>
+// Cursor
+const cur = document.getElementById('cur');
+const ring = document.getElementById('curRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cur.style.transform=`translate(${mx-5}px,${my-5}px)`;
+});
+function animRing(){
+  rx+=(mx-rx-17)*0.12;ry+=(my-ry-17)*0.12;
+  ring.style.transform=`translate(${rx}px,${ry}px)`;
+  requestAnimationFrame(animRing);
+}
+animRing();
+document.querySelectorAll('a,button,.course-card,.story-card,.faculty-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>ring.classList.add('big'));
+  el.addEventListener('mouseleave',()=>ring.classList.remove('big'));
+});
+
+// Nav scroll
+const nav=document.getElementById('navbar');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>60));
+
+// Scroll reveal
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');}),{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Stat counter
+const statObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('lit');
+      const el=e.target.querySelector('.snum');
+      const target=parseInt(e.target.dataset.val);
+      let cur=0;const step=target/60;
+      const t=setInterval(()=>{
+        cur=Math.min(cur+step,target);
+        el.textContent=Math.round(cur).toLocaleString('en-IN');
+        if(cur>=target)clearInterval(t);
+      },20);
+      statObs.unobserve(e.target);
+    }
+  });
+},{threshold:0.5});
+document.querySelectorAll('.stat-item').forEach(el=>statObs.observe(el));
+
+// Enroll form
+document.getElementById('enrollBtn').addEventListener('click',function(){
+  this.textContent='✓ Application Submitted! We\'ll call you soon.';
+  this.style.background='#22c55e';
+  setTimeout(()=>{this.textContent='Apply for Free Counselling →';this.style.background='';},4000);
+});
+</script>
+</body>
+</html>

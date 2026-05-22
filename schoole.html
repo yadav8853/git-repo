@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Why Choose Us — Matunga Premier School</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+  <style>
+    :root {
+      --maroon:   #7b1d1d;
+      --maroon2:  #a02020;
+      --gold:     #c9973a;
+      --gold-lt:  #e8c06a;
+      --cream:    #fdf8f2;
+      --off:      #f5ede0;
+      --dark:     #1a0a0a;
+      --text:     #2d1a1a;
+      --muted:    #7a6060;
+      --white:    #ffffff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAVBAR ─────────────────────── */
+    .navbar {
+      background: var(--maroon);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      box-shadow: 0 2px 20px rgba(123,29,29,0.4);
+    }
+    .navbar-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--cream) !important;
+      letter-spacing: 0.3px;
+    }
+    .navbar-brand span { color: var(--gold-lt); }
+    .nav-link {
+      color: rgba(253,248,242,0.7) !important;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-link:hover, .nav-link.active { color: var(--gold-lt) !important; }
+    .btn-nav {
+      background: var(--gold);
+      color: var(--dark);
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      border: none;
+      padding: 0.5rem 1.3rem;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-nav:hover { background: var(--gold-lt); color: var(--dark); }
+
+    /* ─── HERO ───────────────────────── */
+    .hero {
+      background: var(--maroon);
+      min-height: 72vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg-pattern {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 80% 20%, rgba(201,151,58,0.12) 0%, transparent 50%),
+        radial-gradient(circle at 10% 80%, rgba(201,151,58,0.07) 0%, transparent 40%);
+    }
+    .hero-grid-lines {
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(201,151,58,0.04) 60px, rgba(201,151,58,0.04) 61px),
+        repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(201,151,58,0.04) 60px, rgba(201,151,58,0.04) 61px);
+    }
+    .hero-ornament {
+      position: absolute;
+      right: -80px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 500px;
+      height: 500px;
+      border: 1px solid rgba(201,151,58,0.12);
+      border-radius: 50%;
+    }
+    .hero-ornament::before {
+      content: '';
+      position: absolute;
+      inset: 40px;
+      border: 1px solid rgba(201,151,58,0.08);
+      border-radius: 50%;
+    }
+    .hero-ornament::after {
+      content: '';
+      position: absolute;
+      inset: 80px;
+      border: 1px solid rgba(201,151,58,0.06);
+      border-radius: 50%;
+    }
+    .hero-content { position: relative; z-index: 2; padding: 5rem 0; }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(201,151,58,0.12);
+      border: 1px solid rgba(201,151,58,0.3);
+      color: var(--gold-lt);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      margin-bottom: 1.8rem;
+      animation: fadeUp 0.7s ease both;
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.8s ease 0.1s both;
+    }
+    .hero h1 .accent { color: var(--gold-lt); font-style: italic; }
+    .hero-desc {
+      font-size: 1.05rem;
+      color: rgba(253,248,242,0.6);
+      line-height: 1.8;
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.8s ease 0.2s both;
+    }
+    .hero-cta-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+      animation: fadeUp 0.8s ease 0.3s both;
+    }
+    .btn-gold {
+      background: var(--gold);
+      color: var(--dark);
+      font-weight: 700;
+      font-size: 0.88rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      border: none;
+      padding: 0.85rem 2.2rem;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-gold:hover { background: var(--gold-lt); color: var(--dark); transform: translateY(-2px); }
+    .btn-outline-cream {
+      border: 1.5px solid rgba(253,248,242,0.3);
+      color: rgba(253,248,242,0.8);
+      font-size: 0.88rem;
+      font-weight: 500;
+      padding: 0.8rem 2rem;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-outline-cream:hover { border-color: var(--gold-lt); color: var(--gold-lt); }
+
+    /* Floating stat cards */
+    .hero-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      animation: fadeUp 0.9s ease 0.4s both;
+    }
+    .hstat {
+      background: rgba(253,248,242,0.05);
+      border: 1px solid rgba(201,151,58,0.2);
+      border-radius: 6px;
+      padding: 1.4rem 1.6rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hstat::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--gold);
+    }
+    .hstat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--gold-lt);
+      line-height: 1;
+    }
+    .hstat-label { font-size: 0.78rem; color: rgba(253,248,242,0.5); margin-top: 0.3rem; letter-spacing: 0.3px; }
+
+    /* ─── SECTION COMMON ─────────────── */
+    .sec-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--maroon2);
+      margin-bottom: 0.6rem;
+    }
+    .sec-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.15;
+    }
+    .sec-title em { font-style: italic; color: var(--maroon2); }
+    .sec-title.light { color: var(--cream); }
+    .sec-title.light em { color: var(--gold-lt); }
+    .gold-rule { width: 44px; height: 3px; background: var(--gold); margin: 1rem 0; }
+
+    /* ─── REASONS GRID ───────────────── */
+    .reasons-section { padding: 6rem 0; background: var(--cream); }
+    .reason-card {
+      background: white;
+      border-radius: 8px;
+      padding: 2.2rem;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 2px 18px rgba(123,29,29,0.06);
+      border: 1px solid rgba(123,29,29,0.06);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .reason-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(to right, var(--maroon), var(--gold));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s ease;
+    }
+    .reason-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(123,29,29,0.12); }
+    .reason-card:hover::after { transform: scaleX(1); }
+    .reason-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: rgba(123,29,29,0.07);
+      line-height: 1;
+      position: absolute;
+      top: 1rem; right: 1.5rem;
+    }
+    .reason-icon {
+      width: 52px;
+      height: 52px;
+      background: var(--off);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      color: var(--maroon);
+      margin-bottom: 1.2rem;
+    }
+    .reason-card h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.7rem;
+    }
+    .reason-card p { font-size: 0.875rem; color: var(--muted); line-height: 1.75; margin: 0; }
+
+    /* ─── ACHIEVEMENTS BAND ──────────── */
+    .achievements-band {
+      background: var(--maroon);
+      padding: 4rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .achievements-band::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        -45deg, transparent, transparent 30px,
+        rgba(201,151,58,0.03) 30px, rgba(201,151,58,0.03) 31px
+      );
+    }
+    .ach-item {
+      text-align: center;
+      padding: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    .ach-item + .ach-item { border-left: 1px solid rgba(201,151,58,0.15); }
+    .ach-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.2rem;
+      font-weight: 700;
+      color: var(--gold-lt);
+      line-height: 1;
+    }
+    .ach-label { font-size: 0.8rem; color: rgba(253,248,242,0.5); margin-top: 0.4rem; letter-spacing: 0.5px; }
+
+    /* ─── DIFFERENCE SECTION ─────────── */
+    .difference-section { padding: 6rem 0; background: var(--off); }
+    .diff-feature {
+      display: flex;
+      gap: 1.2rem;
+      margin-bottom: 2.2rem;
+      align-items: flex-start;
+    }
+    .diff-icon {
+      flex-shrink: 0;
+      width: 46px;
+      height: 46px;
+      background: var(--maroon);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold-lt);
+      font-size: 1.1rem;
+    }
+    .diff-feature h5 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+    .diff-feature p { font-size: 0.875rem; color: var(--muted); line-height: 1.7; margin: 0; }
+
+    .image-stack {
+      position: relative;
+      height: 500px;
+    }
+    .img-main {
+      position: absolute;
+      top: 0; left: 0;
+      width: 82%;
+      height: 85%;
+      border-radius: 8px;
+      object-fit: cover;
+      box-shadow: 0 16px 48px rgba(123,29,29,0.18);
+      filter: saturate(0.85);
+    }
+    .img-accent {
+      position: absolute;
+      bottom: 0; right: 0;
+      width: 55%;
+      height: 48%;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 4px solid var(--cream);
+      box-shadow: 0 8px 24px rgba(123,29,29,0.15);
+      filter: saturate(0.85);
+    }
+    .img-badge {
+      position: absolute;
+      top: 50%;
+      right: 6%;
+      transform: translateY(-50%);
+      background: var(--maroon);
+      border: 2px solid var(--gold);
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      text-align: center;
+      z-index: 10;
+    }
+    .img-badge-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--gold-lt);
+      line-height: 1;
+    }
+    .img-badge-text { font-size: 0.7rem; color: rgba(253,248,242,0.6); letter-spacing: 0.5px; margin-top: 0.2rem; }
+
+    /* ─── TESTIMONIALS ───────────────── */
+    .testimonials-section {
+      padding: 6rem 0;
+      background: var(--cream);
+    }
+    .tcard {
+      background: white;
+      border-radius: 8px;
+      padding: 2.2rem;
+      height: 100%;
+      box-shadow: 0 4px 24px rgba(123,29,29,0.06);
+      border-top: 4px solid var(--maroon);
+      position: relative;
+    }
+    .tcard-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem;
+      color: rgba(123,29,29,0.1);
+      line-height: 0.6;
+      margin-bottom: 0.5rem;
+    }
+    .tcard-text {
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+    .tcard-author { display: flex; align-items: center; gap: 0.8rem; }
+    .tcard-avatar {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: var(--maroon);
+      color: var(--gold-lt);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tcard-name { font-weight: 600; font-size: 0.88rem; color: var(--text); }
+    .tcard-role { font-size: 0.75rem; color: var(--muted); }
+    .stars { color: var(--gold); font-size: 0.8rem; margin-bottom: 0.8rem; }
+
+    /* ─── FACILITIES ─────────────────── */
+    .facilities-section {
+      padding: 6rem 0;
+      background: var(--maroon);
+    }
+    .fac-card {
+      background: rgba(253,248,242,0.05);
+      border: 1px solid rgba(201,151,58,0.15);
+      border-radius: 8px;
+      padding: 1.8rem;
+      text-align: center;
+      height: 100%;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .fac-card:hover {
+      background: rgba(201,151,58,0.1);
+      transform: translateY(-4px);
+    }
+    .fac-icon {
+      font-size: 2.2rem;
+      color: var(--gold-lt);
+      margin-bottom: 1rem;
+    }
+    .fac-card h5 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 0.5rem;
+    }
+    .fac-card p { font-size: 0.82rem; color: rgba(253,248,242,0.5); margin: 0; line-height: 1.6; }
+
+    /* ─── CTA ────────────────────────── */
+    .cta-section {
+      padding: 6rem 0;
+      background: var(--off);
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: 'MPS';
+      position: absolute;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20rem;
+      font-weight: 700;
+      color: rgba(123,29,29,0.04);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .cta-inner {
+      background: var(--maroon);
+      border-radius: 12px;
+      padding: 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-inner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(201,151,58,0.1), transparent 70%);
+    }
+    .cta-inner h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 1rem;
+      position: relative;
+    }
+    .cta-inner h2 em { font-style: italic; color: var(--gold-lt); }
+    .cta-inner p {
+      color: rgba(253,248,242,0.6);
+      font-size: 1rem;
+      max-width: 500px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.75;
+      position: relative;
+    }
+    .cta-buttons { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; position: relative; }
+    .btn-cream {
+      background: var(--cream);
+      color: var(--maroon);
+      font-weight: 700;
+      font-size: 0.88rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      border: none;
+      padding: 0.85rem 2.2rem;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-cream:hover { background: white; transform: translateY(-2px); color: var(--maroon); }
+    .btn-outline-gold {
+      border: 1.5px solid rgba(201,151,58,0.5);
+      color: var(--gold-lt);
+      font-size: 0.88rem;
+      font-weight: 500;
+      padding: 0.8rem 2rem;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-outline-gold:hover { border-color: var(--gold-lt); color: white; }
+
+    /* ─── FOOTER ─────────────────────── */
+    footer {
+      background: var(--dark);
+      padding: 2.5rem 0;
+      border-top: 3px solid var(--maroon);
+    }
+    .footer-brand-sm {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--cream);
+    }
+    .footer-brand-sm span { color: var(--gold-lt); }
+    footer p { font-size: 0.8rem; color: rgba(255,255,255,0.3); margin: 0; }
+    .footer-links a {
+      color: rgba(255,255,255,0.35);
+      font-size: 0.8rem;
+      text-decoration: none;
+      margin-left: 1.2rem;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--gold-lt); }
+
+    /* ─── ANIMATIONS ─────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── RESPONSIVE ─────────────────── */
+    @media (max-width: 991px) {
+      .image-stack { height: 340px; margin-bottom: 2rem; }
+    }
+    @media (max-width: 575px) {
+      .hero h1 { font-size: 2.6rem; }
+      .hero-stats { grid-template-columns: 1fr 1fr; }
+      .cta-inner { padding: 2.5rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── NAVBAR ──────────────────────────────────────── -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="#">Matunga <span>Premier</span></a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <i class="bi bi-list text-white fs-4"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav mx-auto gap-1">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="academics.html">Academics</a></li>
+          <li class="nav-item"><a class="nav-link active" href="schoole.html">School</a></li>
+          <li class="nav-item"><a class="nav-link" href="digital-academi.html">digital</a></li>
+        </ul>
+        <a href="#" class="btn-nav">Apply Now</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ─── HERO ─────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-bg-pattern"></div>
+    <div class="hero-grid-lines"></div>
+    <div class="hero-ornament"></div>
+    <div class="container">
+      <div class="row align-items-center gy-5">
+        <div class="col-lg-7">
+          <div class="hero-content">
+            <span class="hero-badge"><i class="bi bi-patch-check-fill"></i> Matunga's Most Trusted School</span>
+            <h1>Why Families<br>Choose <span class="accent">Matunga<br>Premier</span></h1>
+            <p class="hero-desc">For over five decades, we have shaped young minds in the heart of Mumbai — offering not just education, but a launchpad for life. Here is why thousands of families trust us with what matters most.</p>
+            <div class="hero-cta-row">
+              <a href="#reasons" class="btn-gold">Discover Our Difference</a>
+              <a href="#" class="btn-outline-cream">Book a School Visit</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="hero-stats">
+            <div class="hstat">
+              <div class="hstat-num">55+</div>
+              <div class="hstat-label">Years of Legacy</div>
+            </div>
+            <div class="hstat">
+              <div class="hstat-num">4,500+</div>
+              <div class="hstat-label">Alumni Worldwide</div>
+            </div>
+            <div class="hstat">
+              <div class="hstat-num">97%</div>
+              <div class="hstat-label">Board Pass Rate</div>
+            </div>
+            <div class="hstat">
+              <div class="hstat-num">120+</div>
+              <div class="hstat-label">Trained Faculty</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── REASONS GRID ──────────────────────────────────── -->
+  <section class="reasons-section" id="reasons">
+    <div class="container">
+      <div class="text-center mb-5 reveal">
+        <p class="sec-label">Our Strengths</p>
+        <h2 class="sec-title">8 Reasons to Choose <em>Matunga Premier</em></h2>
+        <div class="gold-rule mx-auto"></div>
+      </div>
+      <div class="row g-4">
+
+        <div class="col-lg-3 col-md-6 reveal" style="transition-delay:0.05s">
+          <div class="reason-card">
+            <span class="reason-num">01</span>
+            <div class="reason-icon"><i class="bi bi-mortarboard-fill"></i></div>
+            <h4>Academic Excellence</h4>
+            <p>Consistently top-ranked results in SSC & HSC boards. Our structured curriculum blends conceptual depth with exam readiness.</p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 reveal" style="transition-delay:0.1s">
+          <div class="reason-card">
+            <span class="reason-num">02</span>
+            <div class="reason-icon"><i class="bi bi-people-fill"></i></div>
+            <h4>Expert Faculty</h4>
+            <p>Over 120 subject-matter specialists with an average of 14 years' teaching experience. Your child learns from the best.</p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 reveal" style="transition-delay:0.15s">
+          <div class="reason-card">
+            <span class="reason-num">03</span>
+            <div class="reason-icon"><i class="bi bi-heart-fill"></i></div>
+            <h4>Holistic Growth</h4>
+            <p>Sports, arts, music, debate and community service — we nurture character alongside classwork.</p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 reveal" style="transition-delay:0.2s">
+          <div class="reason-card">
+            <span class="reason-num">04</span>
+            <div class="reason-icon"><i class="bi bi-shield-check"></i></div>
+            <h4>Safe & Caring Campus</h4>
+            <p>CCTV surveillance, trained counsellors, anti-bullying policies and a strong pastoral care system ensure every child thrives.</p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 reveal" style="transition-delay:0.05s">
+          <div class="reason-card">
+            <span class="reason-num">05</span>
+            <div class="reason-icon"><i class="bi bi-laptop"></i></div>
+            <h4>Modern Tech Integration</h4>
+            <p>Smart classrooms, a dedicated computer lab and digital literacy programmes prepare students for a technology-driven world.</p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 reveal" style="transition-delay:0.1s">
+          <div class="reason-card">
+            <span class="reason-num">06</span>
+            <div class="reason-icon"><i class="bi bi-person-check-fill"></i></div>
+            <h4>Low Student-Teacher Ratio</h4>
+            <p>With a 20:1 ratio, every student receives personal attention, timely feedback and mentorship that makes a real difference.</p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 reveal" style="transition-delay:0.15s">
+          <div class="reason-card">
+            <span class="reason-num">07</span>
+            <div class="reason-icon"><i class="bi bi-globe2"></i></div>
+            <h4>Matunga's Central Location</h4>
+            <p>Strategically located in Matunga with easy access via road, rail and bus — making daily commutes convenient for all families.</p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 reveal" style="transition-delay:0.2s">
+          <div class="reason-card">
+            <span class="reason-num">08</span>
+            <div class="reason-icon"><i class="bi bi-cash-coin"></i></div>
+            <h4>Affordable Quality</h4>
+            <p>World-class education at accessible fees, with merit scholarships ensuring no deserving child is left behind.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── ACHIEVEMENTS BAND ──────────────────────────────── -->
+  <section class="achievements-band">
+    <div class="container">
+      <div class="row g-0">
+        <div class="col-6 col-md-3 ach-item reveal">
+          <div class="ach-num">55+</div>
+          <div class="ach-label">Years Serving Matunga</div>
+        </div>
+        <div class="col-6 col-md-3 ach-item reveal" style="transition-delay:0.1s">
+          <div class="ach-num">2,800+</div>
+          <div class="ach-label">Current Students</div>
+        </div>
+        <div class="col-6 col-md-3 ach-item reveal" style="transition-delay:0.2s">
+          <div class="ach-num">180+</div>
+          <div class="ach-label">Awards & Recognitions</div>
+        </div>
+        <div class="col-6 col-md-3 ach-item reveal" style="transition-delay:0.3s">
+          <div class="ach-num">100%</div>
+          <div class="ach-label">Parent Satisfaction (2024)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── THE DIFFERENCE ────────────────────────────────── -->
+  <section class="difference-section">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-5 reveal">
+          <div class="image-stack">
+            <img class="img-main" src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=75" alt="Classroom"/>
+            <img class="img-accent" src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=500&q=70" alt="Students"/>
+            <div class="img-badge">
+              <div class="img-badge-num">A+</div>
+              <div class="img-badge-text">NAAC Grade</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-7 reveal" style="transition-delay:0.15s">
+          <p class="sec-label">What Sets Us Apart</p>
+          <h2 class="sec-title">More Than a School —<br><em>A Community That Cares</em></h2>
+          <div class="gold-rule"></div>
+          <p style="font-size:0.95rem; color:var(--muted); line-height:1.8; margin-bottom:2rem;">At Matunga Premier, education is a partnership between teachers, parents and students. Every decision we make is anchored in one belief: every child has extraordinary potential.</p>
+
+          <div class="diff-feature">
+            <div class="diff-icon"><i class="bi bi-book-half"></i></div>
+            <div>
+              <h5>Value-Based Education</h5>
+              <p>Rooted in Indian culture and global outlook, we instil integrity, empathy and resilience in every student.</p>
+            </div>
+          </div>
+          <div class="diff-feature">
+            <div class="diff-icon"><i class="bi bi-graph-up-arrow"></i></div>
+            <div>
+              <h5>Data-Driven Progress Tracking</h5>
+              <p>Regular assessments, parent-teacher meetings and individual learning plans ensure no student falls behind.</p>
+            </div>
+          </div>
+          <div class="diff-feature">
+            <div class="diff-icon"><i class="bi bi-trophy-fill"></i></div>
+            <div>
+              <h5>Proven Track Record</h5>
+              <p>Dozens of state board toppers, national sports champions and distinguished alumni spanning medicine, law, technology and the arts.</p>
+            </div>
+          </div>
+          <div class="diff-feature">
+            <div class="diff-icon"><i class="bi bi-chat-heart-fill"></i></div>
+            <div>
+              <h5>Strong Parent Partnership</h5>
+              <p>An active Parent-Teacher Association, monthly newsletters and an open-door policy keep families connected every step of the way.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FACILITIES ─────────────────────────────────────── -->
+  <section class="facilities-section">
+    <div class="container">
+      <div class="text-center mb-5 reveal">
+        <p class="sec-label" style="color:var(--gold)">Our Infrastructure</p>
+        <h2 class="sec-title light">World-Class <em>Facilities</em></h2>
+        <div class="gold-rule mx-auto"></div>
+      </div>
+      <div class="row g-3">
+        <div class="col-lg-2 col-md-4 col-6 reveal" style="transition-delay:0.05s">
+          <div class="fac-card">
+            <div class="fac-icon"><i class="bi bi-pc-display"></i></div>
+            <h5>Smart Classrooms</h5>
+            <p>Interactive boards & digital learning tools</p>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-6 reveal" style="transition-delay:0.1s">
+          <div class="fac-card">
+            <div class="fac-icon"><i class="bi bi-flask"></i></div>
+            <h5>Science Labs</h5>
+            <p>Fully equipped Physics, Chem & Bio labs</p>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-6 reveal" style="transition-delay:0.15s">
+          <div class="fac-card">
+            <div class="fac-icon"><i class="bi bi-book"></i></div>
+            <h5>Library</h5>
+            <p>10,000+ books, digital journals & reading lounge</p>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-6 reveal" style="transition-delay:0.2s">
+          <div class="fac-card">
+            <div class="fac-icon"><i class="bi bi-dribbble"></i></div>
+            <h5>Sports Ground</h5>
+            <p>Cricket, Football, Kabaddi & Athletics</p>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-6 reveal" style="transition-delay:0.25s">
+          <div class="fac-card">
+            <div class="fac-icon"><i class="bi bi-music-note-beamed"></i></div>
+            <h5>Performing Arts</h5>
+            <p>Music room, dance studio & auditorium</p>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-6 reveal" style="transition-delay:0.3s">
+          <div class="fac-card">
+            <div class="fac-icon"><i class="bi bi-bus-front"></i></div>
+            <h5>Safe Transport</h5>
+            <p>GPS-tracked buses covering all key routes</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── TESTIMONIALS ──────────────────────────────────── -->
+  <section class="testimonials-section">
+    <div class="container">
+      <div class="text-center mb-5 reveal">
+        <p class="sec-label">Parent & Alumni Voices</p>
+        <h2 class="sec-title">They Chose <em>Matunga Premier</em></h2>
+        <div class="gold-rule mx-auto"></div>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-4 reveal" style="transition-delay:0.05s">
+          <div class="tcard">
+            <div class="tcard-quote">"</div>
+            <div class="stars">★★★★★</div>
+            <p class="tcard-text">My son struggled with maths until he joined Matunga Premier. The teachers identified the gap and gave him personal attention. He scored 94 in his boards. I am forever grateful.</p>
+            <div class="tcard-author">
+              <div class="tcard-avatar">S</div>
+              <div>
+                <div class="tcard-name">Sunanda Kulkarni</div>
+                <div class="tcard-role">Parent · Grade 10</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 reveal" style="transition-delay:0.1s">
+          <div class="tcard">
+            <div class="tcard-quote">"</div>
+            <div class="stars">★★★★★</div>
+            <p class="tcard-text">I am a proud alumnus and now send my own children here. The values and discipline this school gave me shaped my entire career as a doctor. There is no better school in Matunga.</p>
+            <div class="tcard-author">
+              <div class="tcard-avatar">R</div>
+              <div>
+                <div class="tcard-name">Dr. Ramesh Patil</div>
+                <div class="tcard-role">Alumnus, Batch of 1998</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 reveal" style="transition-delay:0.15s">
+          <div class="tcard">
+            <div class="tcard-quote">"</div>
+            <div class="stars">★★★★★</div>
+            <p class="tcard-text">The co-curricular activities here are outstanding. My daughter discovered her passion for theatre and now performs at city festivals. The school truly sees the whole child.</p>
+            <div class="tcard-author">
+              <div class="tcard-avatar">M</div>
+              <div>
+                <div class="tcard-name">Meena & Vivek Desai</div>
+                <div class="tcard-role">Parents · Grade 8</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CTA ───────────────────────────────────────────── -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-inner reveal">
+        <h2>Give Your Child the <em>Best Start</em> in Life</h2>
+        <p>Admissions for the Academic Year 2025–26 are now open. Seats are limited — take the first step today and schedule a campus visit.</p>
+        <div class="cta-buttons">
+          <a href="#" class="btn-cream">Apply for Admission</a>
+          <a href="#" class="btn-outline-gold">Download Prospectus</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ────────────────────────────────────────── -->
+  <footer>
+    <div class="container d-flex justify-content-between align-items-center flex-wrap gap-3">
+      <div>
+        <div class="footer-brand-sm">Matunga <span>Premier</span> School</div>
+        <p class="mt-1">© 2025 Matunga Premier School. All rights reserved.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms</a>
+        <a href="#">Contact</a>
+        <a href="#">Careers</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
