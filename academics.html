@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Horizon Academy — Where Minds Grow</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0B1F3A;
+    --blue: #1A5CFF;
+    --sky: #E8F0FF;
+    --gold: #F5A623;
+    --mint: #00C896;
+    --coral: #FF6B6B;
+    --light: #F7F9FC;
+    --white: #ffffff;
+    --text: #1A1A2E;
+    --muted: #6B7280;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    color: var(--text);
+    background: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(11,31,58,0.97);
+    backdrop-filter: blur(12px);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 70px;
+  }
+
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+  }
+  .logo-icon {
+    width: 38px; height: 38px; background: var(--gold);
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    font-size: 20px; font-weight: 900; color: var(--navy); font-family: var(--serif);
+  }
+  .logo-text { color: var(--white); font-size: 18px; font-weight: 600; letter-spacing: 0.3px; }
+  .logo-text span { color: var(--gold); }
+
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; font-weight: 500; letter-spacing: 0.3px; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold); }
+
+  .nav-cta {
+    background: var(--blue); color: var(--white);
+    padding: 9px 22px; border-radius: 8px;
+    text-decoration: none; font-size: 14px; font-weight: 600;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .nav-cta:hover { background: #0e46d1; transform: translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: var(--navy);
+    position: relative;
+    display: flex; align-items: center;
+    padding: 120px 5% 80px;
+    overflow: hidden;
+  }
+
+  .hero-bg-shapes {
+    position: absolute; inset: 0; pointer-events: none;
+  }
+  .shape {
+    position: absolute; border-radius: 50%; opacity: 0.08;
+  }
+  .shape-1 { width: 600px; height: 600px; background: var(--blue); top: -100px; right: -100px; }
+  .shape-2 { width: 300px; height: 300px; background: var(--gold); bottom: 50px; left: 10%; }
+  .shape-3 { width: 150px; height: 150px; background: var(--mint); top: 40%; right: 35%; }
+
+  .hero-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 60px; align-items: center;
+    max-width: 1300px; width: 100%; margin: auto;
+    position: relative; z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(245,166,35,0.15); border: 1px solid rgba(245,166,35,0.4);
+    color: var(--gold); font-size: 13px; font-weight: 500;
+    padding: 6px 14px; border-radius: 100px;
+    margin-bottom: 28px;
+  }
+  .badge-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(42px, 5vw, 70px);
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 24px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, #1A5CFF, #00C896);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: 18px; color: rgba(255,255,255,0.65);
+    line-height: 1.75; max-width: 500px; margin-bottom: 40px;
+  }
+
+  .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--blue); color: var(--white);
+    padding: 14px 30px; border-radius: 10px;
+    text-decoration: none; font-weight: 600; font-size: 15px;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover { background: #0e46d1; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(26,92,255,0.4); }
+
+  .btn-ghost {
+    background: transparent; color: var(--white);
+    padding: 14px 30px; border-radius: 10px;
+    text-decoration: none; font-weight: 600; font-size: 15px;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.2s;
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.05); }
+
+  .hero-stats {
+    display: flex; gap: 40px; margin-top: 50px;
+  }
+  .stat-item { }
+  .stat-num { font-size: 32px; font-weight: 700; color: var(--white); font-family: var(--serif); }
+  .stat-num span { color: var(--gold); }
+  .stat-label { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+  /* Hero visual card */
+  .hero-visual {
+    position: relative;
+  }
+  .hero-card-main {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 24px;
+    padding: 32px;
+    backdrop-filter: blur(20px);
+  }
+  .class-schedule-label {
+    font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px;
+    color: var(--gold); margin-bottom: 20px;
+  }
+  .schedule-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .schedule-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .sched-color {
+    width: 4px; height: 40px; border-radius: 4px; flex-shrink: 0;
+  }
+  .sched-info { flex: 1; }
+  .sched-subject { font-size: 14px; font-weight: 600; color: var(--white); }
+  .sched-time { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 3px; }
+  .sched-grade {
+    font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 6px;
+  }
+
+  .hero-card-float {
+    position: absolute;
+    background: var(--white);
+    border-radius: 16px;
+    padding: 16px 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .float-1 { bottom: -20px; left: -40px; }
+  .float-2 { top: -20px; right: -30px; }
+
+  .float-icon {
+    width: 42px; height: 42px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .float-text { }
+  .float-val { font-size: 18px; font-weight: 700; color: var(--navy); }
+  .float-desc { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+  /* MARQUEE */
+  .marquee-strip {
+    background: var(--blue); padding: 14px 0;
+    overflow: hidden; white-space: nowrap;
+  }
+  .marquee-inner {
+    display: inline-flex; gap: 60px;
+    animation: marquee 20s linear infinite;
+  }
+  .marquee-item {
+    font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.9);
+    display: inline-flex; align-items: center; gap: 12px;
+  }
+  .marquee-item::after {
+    content: '✦'; font-size: 10px; color: rgba(255,255,255,0.5);
+  }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ABOUT */
+  .section { padding: 100px 5%; }
+  .section-inner { max-width: 1300px; margin: auto; }
+
+  .section-tag {
+    display: inline-block;
+    font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px;
+    color: var(--blue); margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 700; line-height: 1.2;
+    color: var(--navy); margin-bottom: 20px;
+  }
+
+  .section-subtitle {
+    font-size: 17px; color: var(--muted);
+    line-height: 1.75; max-width: 580px;
+  }
+
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center; margin-top: 60px;
+  }
+
+  .about-image-block {
+    position: relative;
+  }
+  .about-img-main {
+    width: 100%; aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #1A5CFF 0%, #0B1F3A 100%);
+    border-radius: 24px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 80px; position: relative; overflow: hidden;
+  }
+  .about-img-main::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 50%;
+    background: linear-gradient(to top, rgba(11,31,58,0.6), transparent);
+  }
+  .about-img-caption {
+    position: absolute; bottom: 24px; left: 24px; z-index: 1;
+    color: white;
+  }
+  .img-caption-text { font-size: 16px; font-weight: 600; }
+  .img-caption-sub { font-size: 13px; opacity: 0.7; margin-top: 2px; }
+
+  .about-badge-float {
+    position: absolute; top: -20px; right: -20px;
+    background: var(--gold); border-radius: 16px;
+    padding: 18px 22px; text-align: center;
+    box-shadow: 0 10px 40px rgba(245,166,35,0.4);
+  }
+  .badge-big-num { font-family: var(--serif); font-size: 36px; font-weight: 900; color: var(--navy); }
+  .badge-big-label { font-size: 12px; font-weight: 600; color: var(--navy); opacity: 0.7; }
+
+  .about-features { display: grid; gap: 24px; margin-top: 32px; }
+  .feature-row {
+    display: flex; gap: 16px; align-items: flex-start;
+  }
+  .feature-icon-box {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: var(--sky); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+  }
+  .feature-text h4 { font-size: 16px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .feature-text p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  /* PROGRAMS */
+  .programs-bg { background: var(--light); }
+
+  .programs-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px; margin-top: 60px;
+  }
+
+  .program-card {
+    background: var(--white); border-radius: 20px;
+    padding: 36px 30px;
+    border: 1px solid #E8ECF4;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+  .program-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(26,92,255,0.12);
+    border-color: rgba(26,92,255,0.3);
+  }
+  .program-icon {
+    width: 60px; height: 60px; border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; margin-bottom: 22px;
+  }
+  .program-card h3 { font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+  .program-card p { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 22px; }
+  .program-link {
+    font-size: 14px; font-weight: 600; color: var(--blue);
+    text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+    transition: gap 0.2s;
+  }
+  .program-link:hover { gap: 10px; }
+  .program-tag {
+    display: inline-block; font-size: 11px; font-weight: 600;
+    padding: 4px 10px; border-radius: 6px; margin-bottom: 14px;
+  }
+
+  /* NUMBERS */
+  .numbers-section {
+    background: var(--navy); padding: 80px 5%;
+  }
+  .numbers-grid {
+    max-width: 1300px; margin: auto;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .number-card {
+    text-align: center; padding: 40px 20px;
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 20px;
+    transition: all 0.3s;
+  }
+  .number-card:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2); }
+  .number-card .big { font-family: var(--serif); font-size: 52px; font-weight: 900; color: var(--white); }
+  .number-card .big span { color: var(--gold); }
+  .number-card .label { font-size: 14px; color: rgba(255,255,255,0.55); margin-top: 8px; }
+
+  /* FACULTY */
+  .faculty-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 24px; margin-top: 60px;
+  }
+  .faculty-card {
+    border-radius: 20px; overflow: hidden;
+    border: 1px solid #E8ECF4;
+    transition: all 0.3s;
+  }
+  .faculty-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+  .faculty-img {
+    height: 200px; display: flex; align-items: center; justify-content: center;
+    font-size: 60px;
+  }
+  .faculty-info { padding: 20px; }
+  .faculty-info h4 { font-size: 16px; font-weight: 700; color: var(--navy); }
+  .faculty-info .role { font-size: 13px; color: var(--muted); margin-top: 4px; }
+  .faculty-info .dept {
+    display: inline-block; margin-top: 10px;
+    font-size: 11px; font-weight: 600;
+    padding: 4px 10px; border-radius: 6px;
+  }
+
+  /* TESTIMONIALS */
+  .testimonials-bg { background: var(--light); }
+  .testimonials-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px; margin-top: 60px;
+  }
+  .testi-card {
+    background: var(--white); border-radius: 20px; padding: 32px;
+    border: 1px solid #E8ECF4;
+  }
+  .testi-stars { color: var(--gold); font-size: 14px; margin-bottom: 16px; }
+  .testi-text { font-size: 15px; color: var(--text); line-height: 1.75; margin-bottom: 24px; font-style: italic; }
+  .testi-author { display: flex; align-items: center; gap: 12px; }
+  .testi-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 700; color: white;
+  }
+  .testi-name { font-size: 14px; font-weight: 600; color: var(--navy); }
+  .testi-role { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* CTA */
+  .cta-section {
+    background: linear-gradient(135deg, var(--blue) 0%, #0B1F3A 100%);
+    padding: 100px 5%; text-align: center; position: relative; overflow: hidden;
+  }
+  .cta-section::before {
+    content: ''; position: absolute; width: 600px; height: 600px;
+    background: rgba(255,255,255,0.04); border-radius: 50%;
+    top: -200px; left: -100px;
+  }
+  .cta-section::after {
+    content: ''; position: absolute; width: 400px; height: 400px;
+    background: rgba(255,255,255,0.04); border-radius: 50%;
+    bottom: -150px; right: 5%;
+  }
+  .cta-inner { position: relative; z-index: 1; }
+  .cta-section h2 {
+    font-family: var(--serif); font-size: clamp(36px, 4vw, 58px);
+    color: var(--white); font-weight: 900; max-width: 700px; margin: 0 auto 20px;
+    line-height: 1.15;
+  }
+  .cta-section p { font-size: 17px; color: rgba(255,255,255,0.7); max-width: 500px; margin: 0 auto 40px; }
+  .cta-buttons { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .btn-white {
+    background: var(--white); color: var(--blue);
+    padding: 15px 32px; border-radius: 10px;
+    text-decoration: none; font-weight: 700; font-size: 15px;
+    transition: all 0.2s;
+  }
+  .btn-white:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy); padding: 70px 5% 30px;
+  }
+  .footer-grid {
+    max-width: 1300px; margin: auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px; margin-bottom: 50px;
+  }
+  .footer-brand p { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.8; margin-top: 16px; max-width: 280px; }
+  .footer-col h5 { font-size: 13px; font-weight: 600; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; }
+  .footer-col ul { list-style: none; display: grid; gap: 10px; }
+  .footer-col a { font-size: 14px; color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--white); }
+  .footer-bottom {
+    max-width: 1300px; margin: auto;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 28px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.35); }
+  .social-links { display: flex; gap: 12px; }
+  .social-link {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none; font-size: 16px; transition: background 0.2s;
+  }
+  .social-link:hover { background: rgba(255,255,255,0.15); }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .hero-grid, .about-grid { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .programs-grid, .numbers-grid, .faculty-grid, .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .programs-grid, .numbers-grid, .faculty-grid, .testimonials-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-icon">H</div>
+    <span class="logo-text">Horizon <span>Academy</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#programs">Programs</a></li>
+    <li><a href="#faculty">Faculty</a></li>
+    <li><a href="#admissions">Admissions</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#admissions" class="nav-cta">Apply Now →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+  </div>
+  <div class="hero-grid">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <div class="badge-dot"></div>
+        Admissions Open 2025–26
+      </div>
+      <h1>Where <em>Curious Minds</em> Become World Changers</h1>
+      <p>Horizon Academy blends rigorous academics with creative thinking, nurturing every student's unique potential in a vibrant, inclusive community.</p>
+      <div class="hero-buttons">
+        <a href="#programs" class="btn-primary">Explore Programs ↗</a>
+        <a href="#about" class="btn-ghost">▶ Virtual Tour</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">98<span>%</span></div>
+          <div class="stat-label">University Placement</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">1<span>:</span>12</div>
+          <div class="stat-label">Teacher-Student Ratio</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">50<span>+</span></div>
+          <div class="stat-label">Co-curricular Clubs</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-card-main">
+        <div class="class-schedule-label">Today's Schedule</div>
+        <div class="schedule-item">
+          <div class="sched-color" style="background:#1A5CFF;"></div>
+          <div class="sched-info">
+            <div class="sched-subject">Advanced Mathematics</div>
+            <div class="sched-time">8:00 – 9:30 AM · Room 204</div>
+          </div>
+          <span class="sched-grade" style="background:rgba(26,92,255,0.15);color:#6B9FFF;">Grade 11</span>
+        </div>
+        <div class="schedule-item">
+          <div class="sched-color" style="background:#00C896;"></div>
+          <div class="sched-info">
+            <div class="sched-subject">Life Sciences Lab</div>
+            <div class="sched-time">9:45 – 11:15 AM · Lab B</div>
+          </div>
+          <span class="sched-grade" style="background:rgba(0,200,150,0.15);color:#00C896;">Grade 10</span>
+        </div>
+        <div class="schedule-item">
+          <div class="sched-color" style="background:#F5A623;"></div>
+          <div class="sched-info">
+            <div class="sched-subject">Creative Writing</div>
+            <div class="sched-time">11:30 AM – 1:00 PM · Hall</div>
+          </div>
+          <span class="sched-grade" style="background:rgba(245,166,35,0.15);color:#F5A623;">Grade 9</span>
+        </div>
+        <div class="schedule-item">
+          <div class="sched-color" style="background:#FF6B6B;"></div>
+          <div class="sched-info">
+            <div class="sched-subject">Digital Arts & Design</div>
+            <div class="sched-time">2:00 – 3:30 PM · Studio</div>
+          </div>
+          <span class="sched-grade" style="background:rgba(255,107,107,0.15);color:#FF6B6B;">Grade 12</span>
+        </div>
+      </div>
+
+      <div class="hero-card-float float-1">
+        <div class="float-icon" style="background:#E8F0FF;">🏆</div>
+        <div class="float-text">
+          <div class="float-val">24 Awards</div>
+          <div class="float-desc">National Competitions</div>
+        </div>
+      </div>
+
+      <div class="hero-card-float float-2">
+        <div class="float-icon" style="background:#E8FFF6;">🎓</div>
+        <div class="float-text">
+          <div class="float-val">1,200+</div>
+          <div class="float-desc">Alumni in Top Universities</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span class="marquee-item">STEM Excellence Centre</span>
+    <span class="marquee-item">National Science Olympiad Champions</span>
+    <span class="marquee-item">Cambridge IGCSE Partner School</span>
+    <span class="marquee-item">Top Rated School 2024</span>
+    <span class="marquee-item">50+ Co-curricular Activities</span>
+    <span class="marquee-item">Internationally Accredited</span>
+    <span class="marquee-item">STEM Excellence Centre</span>
+    <span class="marquee-item">National Science Olympiad Champions</span>
+    <span class="marquee-item">Cambridge IGCSE Partner School</span>
+    <span class="marquee-item">Top Rated School 2024</span>
+    <span class="marquee-item">50+ Co-curricular Activities</span>
+    <span class="marquee-item">Internationally Accredited</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="section-inner">
+    <div style="text-align:center;margin-bottom:20px;">
+      <span class="section-tag">About Horizon Academy</span>
+      <h2 class="section-title">Education That Inspires,<br>Challenges, and Transforms</h2>
+      <p class="section-subtitle" style="margin:0 auto;">For over 30 years, we have been building a community of thinkers, innovators, and leaders who go on to shape the world.</p>
+    </div>
+    <div class="about-grid">
+      <div class="about-image-block">
+        <div class="about-img-main">
+          🏫
+          <div class="about-img-caption">
+            <div class="img-caption-text">Our Main Campus</div>
+            <div class="img-caption-sub">Established 1994 · 12 Acres</div>
+          </div>
+        </div>
+        <div class="about-badge-float">
+          <div class="badge-big-num">30<span style="font-size:20px;color:#0B1F3A;opacity:0.6;">+</span></div>
+          <div class="badge-big-label">Years of Excellence</div>
+        </div>
+      </div>
+
+      <div>
+        <p style="font-size:17px;color:var(--muted);line-height:1.8;margin-bottom:36px;">Horizon Academy is more than a school — it's a place where students discover who they are and who they want to become. Our holistic approach integrates academics, arts, sports, and character-building.</p>
+        <div class="about-features">
+          <div class="feature-row">
+            <div class="feature-icon-box">🔬</div>
+            <div class="feature-text">
+              <h4>World-Class Facilities</h4>
+              <p>State-of-the-art science labs, a fully equipped library, innovation hub, and sports complex designed for 21st-century learning.</p>
+            </div>
+          </div>
+          <div class="feature-row">
+            <div class="feature-icon-box">🌍</div>
+            <div class="feature-text">
+              <h4>Global Mindset</h4>
+              <p>Exchange programs with 15 countries, Model UN, and an internationally diverse student body that prepares students for a global future.</p>
+            </div>
+          </div>
+          <div class="feature-row">
+            <div class="feature-icon-box">💡</div>
+            <div class="feature-text">
+              <h4>Innovation & Creativity</h4>
+              <p>Our maker-spaces, coding clubs, and design thinking curriculum help students solve real-world problems from day one.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMS -->
+<section class="section programs-bg" id="programs">
+  <div class="section-inner">
+    <span class="section-tag">Academic Programs</span>
+    <h2 class="section-title">A Program for<br>Every Passion</h2>
+    <div class="programs-grid">
+      <div class="program-card">
+        <div class="program-icon" style="background:#E8F0FF;">🔭</div>
+        <span class="program-tag" style="background:#E8F0FF;color:#1A5CFF;">Grades 9–12</span>
+        <h3>Science & Technology</h3>
+        <p>Cutting-edge curriculum in Physics, Chemistry, Biology, Computer Science, and AI. Our students regularly win at national science olympiads.</p>
+        <a href="#" class="program-link">Learn More →</a>
+      </div>
+      <div class="program-card">
+        <div class="program-icon" style="background:#FFF4E0;">🎨</div>
+        <span class="program-tag" style="background:#FFF4E0;color:#F5A623;">Grades 6–12</span>
+        <h3>Arts & Humanities</h3>
+        <p>Literature, Philosophy, Fine Arts, Drama, and Music — cultivating critical thinkers and creative storytellers who change culture.</p>
+        <a href="#" class="program-link">Learn More →</a>
+      </div>
+      <div class="program-card">
+        <div class="program-icon" style="background:#E6FFF8;">📊</div>
+        <span class="program-tag" style="background:#E6FFF8;color:#00C896;">Grades 10–12</span>
+        <h3>Commerce & Business</h3>
+        <p>Economics, Accounting, Entrepreneurship, and Business Studies with real internship partnerships and startup incubation programs.</p>
+        <a href="#" class="program-link">Learn More →</a>
+      </div>
+      <div class="program-card">
+        <div class="program-icon" style="background:#FFE8E8;">⚽</div>
+        <span class="program-tag" style="background:#FFE8E8;color:#FF6B6B;">All Grades</span>
+        <h3>Sports & Athletics</h3>
+        <p>Professional coaching in 12 sports disciplines, yoga, martial arts, and a wellness program focused on physical and mental health.</p>
+        <a href="#" class="program-link">Learn More →</a>
+      </div>
+      <div class="program-card">
+        <div class="program-icon" style="background:#F0E8FF;">🧠</div>
+        <span class="program-tag" style="background:#F0E8FF;color:#7B61FF;">Grades 1–8</span>
+        <h3>Primary & Middle School</h3>
+        <p>Play-based early learning transitioning into structured inquiry. We build foundational skills while keeping the joy of discovery alive.</p>
+        <a href="#" class="program-link">Learn More →</a>
+      </div>
+      <div class="program-card">
+        <div class="program-icon" style="background:#E8F8FF;">🌐</div>
+        <span class="program-tag" style="background:#E8F8FF;color:#0099CC;">Grades 9–12</span>
+        <h3>International Baccalaureate</h3>
+        <p>Fully accredited IB Diploma Programme preparing students for the world's top universities with a truly global perspective.</p>
+        <a href="#" class="program-link">Learn More →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NUMBERS -->
+<section class="numbers-section">
+  <div class="numbers-grid">
+    <div class="number-card">
+      <div class="big">2<span>,</span>400<span>+</span></div>
+      <div class="label">Students Enrolled</div>
+    </div>
+    <div class="number-card">
+      <div class="big">180<span>+</span></div>
+      <div class="label">Qualified Teachers</div>
+    </div>
+    <div class="number-card">
+      <div class="big">98<span>%</span></div>
+      <div class="label">University Acceptance Rate</div>
+    </div>
+    <div class="number-card">
+      <div class="big">50<span>+</span></div>
+      <div class="label">Clubs & Activities</div>
+    </div>
+  </div>
+</section>
+
+<!-- FACULTY -->
+<section class="section" id="faculty">
+  <div class="section-inner">
+    <span class="section-tag">Our Faculty</span>
+    <h2 class="section-title">Guided by the Best</h2>
+    <p class="section-subtitle">Our educators are not just teachers — they are mentors, researchers, and passionate advocates for student success.</p>
+    <div class="faculty-grid">
+      <div class="faculty-card">
+        <div class="faculty-img" style="background:#E8F0FF;">👨‍🔬</div>
+        <div class="faculty-info">
+          <h4>Dr. Arun Mehta</h4>
+          <div class="role">Head of Sciences · PhD IIT Bombay</div>
+          <span class="dept" style="background:#E8F0FF;color:#1A5CFF;">Science Dept.</span>
+        </div>
+      </div>
+      <div class="faculty-card">
+        <div class="faculty-img" style="background:#FFF4E0;">👩‍🏫</div>
+        <div class="faculty-info">
+          <h4>Ms. Priya Sharma</h4>
+          <div class="role">English & Literature · MA Delhi Univ.</div>
+          <span class="dept" style="background:#FFF4E0;color:#E07B00;">Humanities</span>
+        </div>
+      </div>
+      <div class="faculty-card">
+        <div class="faculty-img" style="background:#E6FFF8;">👨‍💼</div>
+        <div class="faculty-info">
+          <h4>Mr. Rahul Gupta</h4>
+          <div class="role">Business Studies · MBA IIM Ahmedabad</div>
+          <span class="dept" style="background:#E6FFF8;color:#00875A;">Commerce</span>
+        </div>
+      </div>
+      <div class="faculty-card">
+        <div class="faculty-img" style="background:#FFE8E8;">👩‍💻</div>
+        <div class="faculty-info">
+          <h4>Ms. Ananya Rao</h4>
+          <div class="role">Computer Science · B.Tech NIT</div>
+          <span class="dept" style="background:#FFE8E8;color:#CC3333;">Technology</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section testimonials-bg">
+  <div class="section-inner">
+    <div style="text-align:center;">
+      <span class="section-tag">What People Say</span>
+      <h2 class="section-title">Voices from Our Community</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Horizon Academy didn't just prepare my daughter for university — it prepared her for life. She graduated with confidence, empathy, and a genuine love for learning."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:var(--blue);">SP</div>
+          <div>
+            <div class="testi-name">Sunita Patel</div>
+            <div class="testi-role">Parent · Grade 12</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"The teachers here actually care. They stayed late to help me understand calculus and encouraged me to join the Robotics team. I got into MIT because of this school."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:var(--mint);">AK</div>
+          <div>
+            <div class="testi-name">Arjun Kumar</div>
+            <div class="testi-role">Alumni · Class of 2023</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"The diversity of programs is remarkable. My son explored robotics, classical music, and debate — all in one school. The holistic environment is truly unmatched."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:var(--gold);">RN</div>
+          <div>
+            <div class="testi-name">Rohit Nair</div>
+            <div class="testi-role">Parent · Grade 9 & 11</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="admissions">
+  <div class="cta-inner">
+    <h2>Begin Your Child's Journey to Excellence</h2>
+    <p>Applications for the 2025–26 academic year are now open. Seats are limited — secure your spot today.</p>
+    <div class="cta-buttons">
+      <a href="#" class="btn-white">Apply for Admission →</a>
+      <a href="#" class="btn-ghost">Download Prospectus</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="logo">
+        <div class="logo-icon">H</div>
+        <span class="logo-text">Horizon <span>Academy</span></span>
+      </a>
+      <p>Nurturing the minds that will shape tomorrow. A community built on curiosity, care, and excellence since 1994.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Academics</h5>
+      <ul>
+        <li><a href="#">Primary School</a></li>
+        <li><a href="#">Middle School</a></li>
+        <li><a href="#">High School</a></li>
+        <li><a href="#">IB Programme</a></li>
+        <li><a href="#">Extracurriculars</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>School Life</h5>
+      <ul>
+        <li><a href="#">Events Calendar</a></li>
+        <li><a href="#">Student Portal</a></li>
+        <li><a href="#">Campus Tour</a></li>
+        <li><a href="#">Sports</a></li>
+        <li><a href="#">Arts & Culture</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <ul>
+        <li><a href="#">📍 12 Academy Road, Mumbai</a></li>
+        <li><a href="#">📞 +91 22 1234 5678</a></li>
+        <li><a href="#">✉️ info@horizonacademy.in</a></li>
+        <li><a href="#">⏰ Mon–Fri 8AM–5PM</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Horizon Academy. All rights reserved.</p>
+    <div class="social-links">
+      <a href="#" class="social-link">📘</a>
+      <a href="#" class="social-link">📸</a>
+      <a href="#" class="social-link">🐦</a>
+      <a href="#" class="social-link">▶️</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
