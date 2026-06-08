@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pomo — Focus Timer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Cabinet+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+:root {
+  --bg:       #080808;
+  --bg2:      #0F0F0F;
+  --bg3:      #161616;
+  --bg4:      #1C1C1C;
+  --text:     #F8F6F2;
+  --text2:    #9A9590;
+  --text3:    #4A4744;
+  --accent:   #FF4530;
+  --accent2:  #FF6B4A;
+  --green:    #00E887;
+  --amber:    #FFB020;
+  --border:   rgba(255,255,255,0.06);
+  --border2:  rgba(255,255,255,0.12);
+  --glow:     rgba(255,69,48,0.18);
+}
+
+html,body{height:100%;}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* AMBIENT BG ORBS */
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(80px);
+  opacity: 0.12;
+  transition: background 1.5s ease;
+}
+.orb1 { width: 600px; height: 600px; top: -200px; left: -200px; background: var(--accent); }
+.orb2 { width: 400px; height: 400px; bottom: -100px; right: -100px; background: #6030FF; opacity: 0.08; }
+.orb3 { width: 300px; height: 300px; top: 40%; left: 60%; background: var(--accent2); opacity: 0.06; }
+
+/* GRID OVERLAY */
+.grid-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* NAV */
+nav {
+  position: relative;
+  z-index: 20;
+  padding: 1.5rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(20px);
+  background: rgba(8,8,8,0.6);
+}
+
+.logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 0.12em;
+  color: var(--text);
+}
+.logo .logo-dot { color: var(--accent); }
+
+.nav-center {
+  display: flex;
+  gap: 2px;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  padding: 4px;
+}
+
+.nav-tab {
+  padding: 7px 20px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--text3);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+
+.nav-tab:hover { color: var(--text2); }
+
+.nav-tab.active {
+  background: var(--bg4);
+  color: var(--text);
+  box-shadow: 0 0 0 1px var(--border2);
+}
+
+.nav-tab.active[data-mode="focus"] { color: var(--accent); }
+.nav-tab.active[data-mode="short"] { color: var(--green); }
+.nav-tab.active[data-mode="long"]  { color: var(--amber); }
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.nav-btn {
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border2);
+  background: transparent;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-btn:hover {
+  background: var(--bg3);
+  color: var(--text);
+  border-color: var(--border2);
+}
+
+.nav-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* MAIN */
+main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 0;
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 3rem 2rem;
+  align-items: center;
+}
+
+/* LEFT — TIMER */
+.timer-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding-right: 3rem;
+  border-right: 1px solid var(--border);
+}
+
+/* PHASE BADGE */
+.phase-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 50px;
+  border: 1px solid var(--border2);
+  background: var(--bg3);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text2);
+  margin-bottom: 2.5rem;
+  transition: all 0.5s;
+}
+.phase-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  transition: background 0.5s;
+}
+.phase-dot.pulse { animation: pulseDot 1.4s ease infinite; }
+@keyframes pulseDot {
+  0%,100%{transform:scale(1);opacity:1;}
+  50%{transform:scale(1.5);opacity:0.6;}
+}
+
+/* RING */
+.ring-wrap {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  margin-bottom: 2rem;
+}
+
+#tsv {
+  width: 320px; height: 320px;
+  transform: rotate(-90deg);
+}
+
+#rtrack { fill:none; stroke: var(--bg3); stroke-width:12; }
+#rglow  { fill:none; stroke-width:20; stroke-linecap:round; opacity:0.15; transition:stroke-dashoffset 1s linear,stroke 0.6s; }
+#rfill  { fill:none; stroke-width:6; stroke-linecap:round; transition:stroke-dashoffset 1s linear,stroke 0.6s; }
+
+.ring-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.time-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 6.5rem;
+  letter-spacing: 4px;
+  line-height: 1;
+  color: var(--text);
+  text-shadow: 0 0 60px rgba(255,69,48,0.25);
+  transition: color 0.5s;
+  user-select: none;
+}
+
+.time-label {
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-top: 6px;
+  transition: color 0.5s;
+}
+
+/* PIPS */
+.pips-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 2.5rem;
+}
+
+.pip {
+  height: 4px;
+  width: 36px;
+  border-radius: 2px;
+  background: var(--bg4);
+  position: relative;
+  overflow: hidden;
+  transition: background 0.4s;
+}
+.pip.done { background: var(--text3); }
+.pip.active { background: var(--bg4); }
+.pip.active::after {
+  content:'';
+  position:absolute;
+  inset-block:0;
+  left:0;
+  width: var(--p,0%);
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 1s linear;
+}
+
+/* CONTROLS */
+.controls-row {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.cbtn {
+  width: 46px; height: 46px;
+  border-radius: 12px;
+  border: 1px solid var(--border2);
+  background: var(--bg3);
+  color: var(--text2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.cbtn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.cbtn:hover { background: var(--bg4); color: var(--text); border-color: var(--border2); transform: translateY(-1px); }
+
+.cbtn-main {
+  width: 76px; height: 76px;
+  border-radius: 50%;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: 0 0 0 0 rgba(255,69,48,0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.cbtn-main::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  background: rgba(255,255,255,0.1);
+  opacity:0;
+  transition:opacity 0.2s;
+}
+.cbtn-main:hover::before { opacity:1; }
+.cbtn-main:hover { transform: scale(1.06); box-shadow: 0 0 30px rgba(255,69,48,0.5); }
+.cbtn-main:active { transform: scale(0.97); }
+.cbtn-main.running { background: var(--bg3); color: var(--text); border: 1px solid var(--border2); box-shadow: none; }
+.cbtn-main.running:hover { background: var(--bg4); box-shadow: none; transform: none; }
+
+/* RIGHT PANEL */
+.right-col {
+  padding-left: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.panel-section {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.4rem 1.6rem;
+  transition: border-color 0.3s;
+}
+
+.panel-section:hover { border-color: var(--border2); }
+
+.panel-title {
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 1.1rem;
+}
+
+/* STATS */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.stat-item {
+  background: var(--bg3);
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+}
+
+.stat-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: 1px;
+  line-height: 1;
+  color: var(--text);
+}
+
+.stat-lbl {
+  font-size: 0.62rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-top: 4px;
+}
+
+/* TODAY'S GOAL */
+.goal-bar-wrap {
+  margin-top: 0.5rem;
+}
+.goal-label-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--text2);
+  margin-bottom: 8px;
+}
+.goal-track {
+  height: 6px;
+  background: var(--bg4);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.goal-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: var(--accent);
+  width: 0%;
+  transition: width 0.8s cubic-bezier(0.4,0,0.2,1), background 0.5s;
+}
+
+/* QUOTE */
+.quote-box {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: var(--text2);
+  line-height: 1.65;
+  font-style: italic;
+  transition: opacity 0.6s;
+  padding-left: 0.8rem;
+  border-left: 2px solid var(--border2);
+}
+
+/* KEYBOARD HINTS */
+.kb-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.kb-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.68rem;
+  color: var(--text3);
+}
+
+.kb {
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 5px;
+  padding: 2px 7px;
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--text2);
+  font-family: 'Outfit', monospace;
+}
+
+/* SETTINGS SLIDE */
+.settings-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(8px);
+}
+.settings-overlay.open { display: flex; }
+
+.settings-card {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  padding: 2rem 2.2rem 2.2rem;
+  width: 420px;
+  max-width: 95vw;
+  animation: fadeUp 0.3s ease;
+}
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px);} to{opacity:1;transform:none;} }
+
+.settings-hd {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.8rem;
+}
+
+.settings-hd h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.close-x {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--border2);
+  background: var(--bg3);
+  color: var(--text2);
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.close-x:hover { background: var(--bg4); color: var(--text); }
+
+.srow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.srow:last-of-type { border-bottom: none; }
+
+.srow-lbl { font-size: 0.85rem; font-weight: 400; }
+.srow-sub { font-size: 0.72rem; color: var(--text3); margin-top: 2px; }
+
+.num-ctrl { display: flex; align-items: center; gap: 12px; }
+
+.nbtn {
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  border: 1px solid var(--border2);
+  background: var(--bg3);
+  color: var(--text);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+  line-height: 1;
+}
+.nbtn:hover { background: var(--bg4); }
+
+.nval {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+  min-width: 30px;
+  text-align: center;
+}
+
+.sbtn {
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 13px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.sbtn:hover { opacity: 0.88; transform: translateY(-1px); }
+
+/* TOAST */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(12px);
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 200;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.toast::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* FOOTER */
+footer {
+  position: relative;
+  z-index: 1;
+  padding: 1rem 3rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+footer p { font-size: 0.68rem; font-weight: 300; color: var(--text3); letter-spacing: 0.06em; }
+.footer-links { display: flex; gap: 1.5rem; }
+.footer-links a { font-size: 0.68rem; color: var(--text3); text-decoration: none; letter-spacing: 0.06em; transition: color 0.2s; }
+.footer-links a:hover { color: var(--text2); }
+
+/* RESPONSIVE */
+@media(max-width:800px){
+  main { grid-template-columns: 1fr; padding: 2rem 1rem; }
+  .timer-col { border-right: none; padding-right: 0; border-bottom: 1px solid var(--border); padding-bottom: 2rem; margin-bottom: 2rem; }
+  .right-col { padding-left: 0; }
+  nav { padding: 1rem 1.5rem; }
+  .nav-center { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="orb orb1" id="orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+<div class="grid-overlay"></div>
+
+<nav>
+ <a href="index.html"> <div class="logo">POMO<span class="logo-dot">.</span></div> </a>
+
+  <div class="nav-center">
+    <button class="nav-tab active" data-mode="focus" id="tab-focus" onclick="setMode('focus')">Focus</button>
+    <button class="nav-tab" data-mode="short" id="tab-short" onclick="setMode('short')">Short break</button>
+    <button class="nav-tab" data-mode="long" id="tab-long" onclick="setMode('long')">Long break</button>
+  </div>
+
+  <div class="nav-right">
+    <button class="nav-btn" onclick="showToast('Task list coming soon')">
+      <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      Tasks
+    </button>
+    <button class="nav-btn" onclick="openSettings()">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Settings
+    </button>
+  </div>
+</nav>
+
+<main>
+  <!-- LEFT: TIMER -->
+  <div class="timer-col">
+    <div class="phase-badge" id="phase-badge">
+      <span class="phase-dot" id="phase-dot"></span>
+      <span id="phase-text">Session 1 of 4</span>
+    </div>
+
+    <div class="ring-wrap">
+      <svg id="tsv" viewBox="0 0 320 320">
+        <circle id="rtrack" cx="160" cy="160" r="138"/>
+        <circle id="rglow"  cx="160" cy="160" r="138"/>
+        <circle id="rfill"  cx="160" cy="160" r="138"/>
+      </svg>
+      <div class="ring-center">
+        <div class="time-num" id="time-disp">25:00</div>
+        <div class="time-label" id="time-lbl">Focus</div>
+      </div>
+    </div>
+
+    <div class="pips-row" id="pips"></div>
+
+    <div class="controls-row">
+      <button class="cbtn" onclick="resetTimer()" title="Reset (R)">
+        <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/></svg>
+      </button>
+
+      <button class="cbtn-main" id="main-btn" onclick="toggleTimer()">Start</button>
+
+      <button class="cbtn" onclick="skipFwd()" title="Skip">
+        <svg viewBox="0 0 24 24"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="right-col">
+
+    <!-- STATS -->
+    <div class="panel-section">
+      <div class="panel-title">Today's stats</div>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-val" id="st-sessions">0</div>
+          <div class="stat-lbl">Sessions</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-val" id="st-focus">0m</div>
+          <div class="stat-lbl">Focus time</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-val" id="st-streak">0</div>
+          <div class="stat-lbl">Streak</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-val" id="st-rounds">0</div>
+          <div class="stat-lbl">Rounds done</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAILY GOAL -->
+    <div class="panel-section">
+      <div class="panel-title">Daily goal</div>
+      <div class="goal-bar-wrap">
+        <div class="goal-label-row">
+          <span id="goal-label">0 of 4 sessions</span>
+          <span id="goal-pct">0%</span>
+        </div>
+        <div class="goal-track">
+          <div class="goal-fill" id="goal-fill"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUOTE -->
+    <div class="panel-section">
+      <div class="panel-title">Mindset</div>
+      <div class="quote-box" id="quote-box">Deep work is the superpower of the 21st century.</div>
+    </div>
+
+    <!-- KEYBOARD -->
+    <div class="panel-section">
+      <div class="panel-title">Shortcuts</div>
+      <div class="kb-row">
+        <div class="kb-hint"><span class="kb">Space</span> play / pause</div>
+        <div class="kb-hint"><span class="kb">R</span> reset</div>
+        <div class="kb-hint"><span class="kb">1</span> focus</div>
+        <div class="kb-hint"><span class="kb">2</span> short break</div>
+        <div class="kb-hint"><span class="kb">3</span> long break</div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <p>POMO · Stay in the zone</p>
+  <div class="footer-links">
+    <a href="#" onclick="showToast('Coming soon')">About</a>
+    <a href="#" onclick="openSettings()">Settings</a>
+    <a href="#" onclick="showToast('Coming soon')">Privacy</a>
+  </div>
+</footer>
+
+<!-- SETTINGS -->
+<div class="settings-overlay" id="sOverlay" onclick="ovClick(event)">
+  <div class="settings-card">
+    <div class="settings-hd">
+      <h2>Timer settings</h2>
+      <button class="close-x" onclick="closeSettings()">✕</button>
+    </div>
+
+    <div class="srow">
+      <div><div class="srow-lbl">Focus duration</div><div class="srow-sub">Minutes per work block</div></div>
+      <div class="num-ctrl">
+        <button class="nbtn" onclick="adj('sf',−1)">−</button>
+        <span class="nval" id="sf">25</span>
+        <button class="nbtn" onclick="adj('sf',1)">+</button>
+      </div>
+    </div>
+
+    <div class="srow">
+      <div><div class="srow-lbl">Short break</div><div class="srow-sub">Rest between sessions</div></div>
+      <div class="num-ctrl">
+        <button class="nbtn" onclick="adj('ss',−1)">−</button>
+        <span class="nval" id="ss">5</span>
+        <button class="nbtn" onclick="adj('ss',1)">+</button>
+      </div>
+    </div>
+
+    <div class="srow">
+      <div><div class="srow-lbl">Long break</div><div class="srow-sub">After completing a full round</div></div>
+      <div class="num-ctrl">
+        <button class="nbtn" onclick="adj('sl',−1)">−</button>
+        <span class="nval" id="sl">15</span>
+        <button class="nbtn" onclick="adj('sl',1)">+</button>
+      </div>
+    </div>
+
+    <div class="srow">
+      <div><div class="srow-lbl">Sessions per round</div><div class="srow-sub">Before long break</div></div>
+      <div class="num-ctrl">
+        <button class="nbtn" onclick="adj('sr',−1)">−</button>
+        <span class="nval" id="sr">4</span>
+        <button class="nbtn" onclick="adj('sr',1)">+</button>
+      </div>
+    </div>
+
+    <button class="sbtn" onclick="saveSettings()">Save &amp; Apply</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const CIRC = 2*Math.PI*138;
+const rfill = document.getElementById('rfill');
+const rglow = document.getElementById('rglow');
+const rtrack = document.getElementById('rtrack');
+const timeDisp = document.getElementById('time-disp');
+const timeLbl = document.getElementById('time-lbl');
+const mainBtn = document.getElementById('main-btn');
+const phaseDot = document.getElementById('phase-dot');
+const phaseText = document.getElementById('phase-text');
+const goalFill = document.getElementById('goal-fill');
+
+const COLORS = { focus:'#FF4530', short:'#00E887', long:'#FFB020' };
+const NAMES  = { focus:'Focus', short:'Short break', long:'Long break' };
+const GLOWS  = { focus:'rgba(255,69,48,0.18)', short:'rgba(0,232,135,0.12)', long:'rgba(255,176,32,0.12)' };
+
+let cfg = { focus:25, short:5, long:15, rounds:4 };
+let mode = 'focus';
+let running = false;
+let iv = null;
+let total = 0, rem = 0;
+let doneSessions = 0;
+let focusMin = 0;
+let streak = 0;
+let rounds = 0;
+
+const quotes = [
+  "Deep work is the superpower of the 21st century.",
+  "One session at a time. One task at a time.",
+  "Clarity comes from engagement, not thought.",
+  "Do the work. Trust the process.",
+  "Distraction is the enemy of depth.",
+  "Energy, not time, is the true currency.",
+  "The ability to focus is increasingly rare — and valuable.",
+  "Win the morning. Win the day.",
+  "Great things are done by a series of small things.",
+];
+
+function init() {
+  total = cfg[mode] * 60;
+  rem = total;
+  rfill.style.strokeDasharray = CIRC;
+  rglow.style.strokeDasharray = CIRC;
+  renderTime();
+  renderRing();
+  renderPips();
+  updatePhase();
+  updateAccent();
+}
+
+function renderTime() {
+  const m = Math.floor(rem/60);
+  const s = rem % 60;
+  const ts = String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+  timeDisp.textContent = ts;
+  timeLbl.textContent = NAMES[mode];
+  document.title = ts + ' · ' + NAMES[mode] + ' — POMO';
+}
+
+function renderRing() {
+  const pct = total > 0 ? rem/total : 1;
+  const off = CIRC*(1-pct);
+  rfill.style.strokeDashoffset = off;
+  rfill.style.stroke = COLORS[mode];
+  rglow.style.strokeDashoffset = off;
+  rglow.style.stroke = COLORS[mode];
+  const pip = document.querySelector('.pip.active');
+  if (pip) pip.style.setProperty('--p', Math.round((1-pct)*100)+'%');
+}
+
+function updateAccent() {
+  document.querySelector('.orb1').style.background = COLORS[mode];
+  document.documentElement.style.setProperty('--accent', COLORS[mode]);
+  document.documentElement.style.setProperty('--accent2', COLORS[mode]);
+  phaseDot.style.background = COLORS[mode];
+  goalFill.style.background = COLORS[mode];
+}
+
+function updatePhase() {
+  if (mode==='focus') phaseText.textContent = 'Session '+(doneSessions+1)+' of '+cfg.rounds;
+  else if (mode==='short') phaseText.textContent = 'Short break · recharge';
+  else phaseText.textContent = 'Long break · well earned';
+  if (running) phaseDot.classList.add('pulse');
+  else phaseDot.classList.remove('pulse');
+}
+
+function renderPips() {
+  const c = document.getElementById('pips');
+  c.innerHTML='';
+  for(let i=0;i<cfg.rounds;i++){
+    const d = document.createElement('div');
+    const done = i < doneSessions;
+    const active = i===doneSessions && mode==='focus';
+    d.className = 'pip'+(done?' done':active?' active':'');
+    c.appendChild(d);
+  }
+}
+
+function updateGoal() {
+  const pct = Math.min(100, Math.round((doneSessions/cfg.rounds)*100));
+  goalFill.style.width = pct+'%';
+  document.getElementById('goal-label').textContent = doneSessions+' of '+cfg.rounds+' sessions';
+  document.getElementById('goal-pct').textContent = pct+'%';
+}
+
+function toggleTimer() { running ? pause() : start(); }
+
+function start() {
+  running = true;
+  mainBtn.textContent = 'Pause';
+  mainBtn.classList.add('running');
+  phaseDot.classList.add('pulse');
+  iv = setInterval(tick, 1000);
+}
+
+function pause() {
+  running = false;
+  mainBtn.textContent = 'Resume';
+  mainBtn.classList.remove('running');
+  phaseDot.classList.remove('pulse');
+  clearInterval(iv);
+}
+
+function resetTimer() {
+  pause();
+  mainBtn.textContent = 'Start';
+  init();
+}
+
+function tick() {
+  rem--;
+  if (rem < 0) { complete(); return; }
+  renderTime();
+  renderRing();
+}
+
+function complete() {
+  pause();
+  mainBtn.textContent = 'Start';
+  if (mode==='focus') {
+    doneSessions++;
+    focusMin += cfg.focus;
+    if (doneSessions > streak) streak = doneSessions;
+    document.getElementById('st-sessions').textContent = doneSessions;
+    document.getElementById('st-focus').textContent = focusMin+'m';
+    document.getElementById('st-streak').textContent = streak;
+    updateGoal();
+    newQuote();
+    if (doneSessions >= cfg.rounds) {
+      doneSessions = 0;
+      rounds++;
+      document.getElementById('st-rounds').textContent = rounds;
+      showToast('Full round complete! Enjoy your long break.');
+      setMode('long');
+    } else {
+      showToast('Session done! Take a short break.');
+      setMode('short');
+    }
+  } else {
+    showToast('Break over. Back to focus!');
+    setMode('focus');
+  }
+  tryNotify(mode==='focus'?'Break time!':'Focus time!');
+}
+
+function skipFwd() { complete(); }
+
+function setMode(m) {
+  if (running) pause();
+  mainBtn.textContent = 'Start';
+  mainBtn.classList.remove('running');
+  mode = m;
+  ['focus','short','long'].forEach(x=>{
+    document.getElementById('tab-'+x).classList.toggle('active',x===m);
+  });
+  init();
+}
+
+function newQuote() {
+  const el = document.getElementById('quote-box');
+  el.style.opacity=0;
+  setTimeout(()=>{
+    el.textContent = quotes[Math.floor(Math.random()*quotes.length)];
+    el.style.opacity=1;
+  },400);
+}
+
+/* SETTINGS */
+const sfMap = { sf:'focus', ss:'short', sl:'long', sr:'rounds' };
+const sfLimits = { sf:[5,90], ss:[1,30], sl:[5,60], sr:[2,8] };
+
+function adj(id, delta) {
+  const key = sfMap[id];
+  const [mn,mx] = sfLimits[id];
+  cfg[key] = Math.max(mn, Math.min(mx, cfg[key]+delta));
+  document.getElementById(id).textContent = cfg[key];
+}
+
+function openSettings() {
+  document.getElementById('sf').textContent = cfg.focus;
+  document.getElementById('ss').textContent = cfg.short;
+  document.getElementById('sl').textContent = cfg.long;
+  document.getElementById('sr').textContent = cfg.rounds;
+  document.getElementById('sOverlay').classList.add('open');
+}
+
+function closeSettings() { document.getElementById('sOverlay').classList.remove('open'); }
+function ovClick(e) { if(e.target===document.getElementById('sOverlay')) closeSettings(); }
+
+function saveSettings() {
+  closeSettings();
+  if (!running) init();
+  renderPips();
+  updateGoal();
+  showToast('Settings saved');
+}
+
+let toastT;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+function tryNotify(msg) {
+  if ('Notification' in window) {
+    if (Notification.permission==='granted') new Notification('POMO',{body:msg});
+    else if (Notification.permission!=='denied') Notification.requestPermission();
+  }
+}
+
+document.addEventListener('keydown', e=>{
+  if (e.target.tagName==='INPUT') return;
+  if (e.code==='Space'){e.preventDefault();toggleTimer();}
+  if (e.code==='KeyR') resetTimer();
+  if (e.code==='Digit1') setMode('focus');
+  if (e.code==='Digit2') setMode('short');
+  if (e.code==='Digit3') setMode('long');
+});
+
+init();
+updateGoal();
+</script>
+</body>
+</html>
